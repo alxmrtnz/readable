@@ -1,0 +1,14 @@
+.landing {
+  .landing-canvas {
+    @include full-box(flex);
+    flex-direction: row;
+
+    .landing-canvas-content {
+      width: 70%;
+    }
+
+    .landing-canvas-sidebar {
+      width: 30%;
+    }
+  }
+}

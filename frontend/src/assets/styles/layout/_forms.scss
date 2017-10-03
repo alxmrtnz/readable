@@ -1,0 +1,90 @@
+@mixin form-element($background-color: transparent, $border-color: $form-border) {
+  @include full-box;
+  @include browser-prefix(appearance, none);
+  background: $background-color;
+  border: 1px solid $border-color;
+  border-radius: 4px;
+  color: $type-alt;
+  font-family: $font;
+  font-size: 1em;
+  line-height: 130%;
+  margin-bottom: $minor-space;
+  padding: 0.9em 1.125em 0.8em;
+
+  &::-webkit-input-placeholder {
+    color: $type-alt;
+  }
+
+  &::-moz-placeholder {
+    color: $type-alt;
+  }
+
+  &:-ms-input-placeholder {
+    color: $type-alt;
+  }
+
+  &:-moz-placeholder {
+    color: $type-alt;
+  }
+
+  &:focus {
+    background: $background;
+    color: $type;
+  }
+} // End form-element mixin
+
+input {
+  &[type="date"],
+  &[type="text"],
+  &[type="tel"],
+  &[type="email"],
+  &[type="password"],
+  &[type="number"] {
+    @include form-element;
+  }
+
+  &[type="search"] {
+    @include form-element($brand);
+    background-color: transparent;
+    padding-left: 2.75em;
+  }
+
+  &[type="submit"] {
+    @include cta($background, $brand, $brand);
+    @include browser-prefix(appearance, none);
+  } // End &[type="submit"]
+
+  &.full-width {
+    width: 100%;
+  }
+} // End input
+
+@mixin label {
+  @include full-box;
+  color: $brand-light;
+  font-family: $font;
+  font-size: 0.875em;
+  line-height: 120%;
+  margin-bottom: $micro-space;
+} // End label mixin
+
+label, .label {
+  @include label;
+}
+
+textarea {
+  @include form-element;
+  min-height: 12em;
+  resize: none;
+}
+
+.input-container {
+  @include full-box;
+
+  &-search {
+    svg {
+      left: 1em;
+      right: auto;
+    }
+  }
+} // End input-container

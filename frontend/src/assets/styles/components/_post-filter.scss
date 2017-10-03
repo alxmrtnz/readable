@@ -1,0 +1,27 @@
+.post-filter {
+  margin-bottom: $space;
+  border-bottom: 1px solid $border-color;
+
+  .post-filter-list {
+    .post-filter-list-item {
+      @include better-box;
+      color: $type-alt;
+      margin-right: $space;
+      padding: $minor-space 0;
+
+      &.active {
+        color: $type;
+
+        &:after {
+          position: absolute;
+          content: '';
+          width: 100%;
+          left: 0;
+          bottom: 0;
+          height: 3px;
+          background-color: $brand;
+        }
+      }
+    }
+  }
+}

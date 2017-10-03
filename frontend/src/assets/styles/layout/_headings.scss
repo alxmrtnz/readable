@@ -1,0 +1,51 @@
+h1, h2, h3, h4, h5 {
+  @include full-box;
+  line-height: 140%;
+}
+
+h1, h2, h3 {
+  color: $brand;
+}
+
+h1 {
+  font-family: $font;
+  font-size: 3em;
+  margin-bottom: $minor-space;
+
+  // Secondary Mobile - Phone & Below
+  @media screen and (max-width: $phone) {
+    font-size: 2.4em;
+  } // End Phone & Below
+}
+
+h2 {
+  font-family: $font;
+  font-size: 2em;
+  margin-bottom: $space;
+}
+
+h3 {
+  font-family: $font;
+  font-size: 1.3125em;
+  margin-bottom: $minor-space;
+}
+
+@mixin h4 {
+  font-size: 0.875em;
+  letter-spacing: 0.13em;
+  line-height: 120%;
+  text-transform: uppercase;
+  margin-bottom: $minor-space;
+
+  &.brand {
+    color: $brand;
+  }
+
+  &.alt {
+    color: $type-alt;
+  }
+}
+
+h4 {
+  @include h4;
+}
