@@ -88,3 +88,45 @@ textarea {
     }
   }
 } // End input-container
+
+// Base dropdown styles using react-dropdown package
+.dropdown-button {
+  @include better-box();
+  margin-bottom: $minor-space;
+  border: 1px solid $form-border;
+  border-radius: $border-radius;
+
+  .Dropdown-control {
+    @include form-element();
+    padding: 1em 1.125em 0.95em;
+    border: none;
+    align-items: center;
+    cursor: pointer;
+    display: flex;
+    margin-bottom: 0;
+
+    .Dropdown-arrow {
+      background-image: url('../icons/dropdown-arrow.svg');
+      background-position: center right;
+      background-repeat: no-repeat;
+      background-size: contain;
+      height: 5px;
+      margin-left: auto;
+      padding-left: 0.9375em;
+      width: 8px;
+    }
+  }
+
+  .Dropdown-menu {
+    @include dropdown-menu();
+    font-size: 0.875em;
+
+    &:after {
+      left: calc(50% + 1px);
+    }
+
+    .Dropdown-option {
+      @include dropdown-menu-item();
+    }
+  } // End .Dropdown-menu
+} // End .dropdown-button

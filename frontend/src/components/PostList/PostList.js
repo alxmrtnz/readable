@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
+import Dropdown from 'react-dropdown';
 
 // Actions
 import { fetchPosts } from '../../actions/posts'
@@ -42,8 +43,30 @@ class PostList extends Component {
 
     posts.sort(this.sortBy('voteScore', false, parseInt));
 
+    const dropdownOptions = [
+      'Popularity',
+      'Most Recent',
+    ]
+
     return (
       <div className="post-list-container">
+        <div className="post-list-header">
+          <h2 className="post-list-header-heading">
+            Top Posts
+          </h2>
+          <div className="dropdown-container">
+            <div className="dropdown-label">
+              Sorted by
+            </div>
+            <Dropdown
+              className="dropdown-button "
+              options={dropdownOptions}
+              // onChange={data => this.handleInputChange({creditCardExpirationMonth: data.value})}
+              value={dropdownOptions[0]}
+              placeholder="Select an option"
+            />
+          </div>
+        </div>
         <ul className='post-list'>
           {posts.map( (post) =>
             <li key={post.id} className="post">

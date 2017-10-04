@@ -1,78 +1,106 @@
-.post-list {
-  .post {
+.post-list-container {
+  .post-list-header {
     @include full-box(flex);
-    padding: $double-minor-space 0;
-    border-bottom: 1px solid $border-color;
+    align-items: center;
+    margin-bottom: $half-space;
 
-    &:first-of-type {
-      padding-top: 0;
+    .post-list-header-heading {
+      margin: 0;
+      font-size: 1.375em;
+      color: $type;
+      font-weight: bold;
     }
 
-    .post-vote {
-      border-radius: $border-radius;
-      border: 1px solid $border-color;
-      font-size: 1.1875em;
-      margin-right: $half-space;
-      text-align: center;
+    .dropdown-container {
+      @include better-box(flex);
+      align-items: center;
+      margin-left: auto;
 
-      .post-vote-score {
-        border-bottom: 1px solid $border-color;
-        border-top: 1px solid $border-color;
-        padding: 0.25em 0;
-        margin: 0.25em 0;
+      .dropdown-label {
+        font-size: 0.882352941em;
+        min-width: 5em;
+        text-align: right;
       }
 
-      .post-vote-up, .post-vote-down {
-        padding: 0 0.5em;
+      .dropdown-button {
+        margin-bottom: 0;
+        margin-left: 1em;
+      }
+    }
+  } // End .post-list-header
 
-        .icon {
-          width: 0.8em;
-          height: 0.53em;
+  .post-list {
+    .post {
+      @include full-box(flex);
+      padding: $double-minor-space 0;
+      border-top: 1px solid $border-color;
 
-          use {
-            fill: $type-alt;
+      .post-vote {
+        border-radius: $border-radius;
+        border: 1px solid $border-color;
+        font-size: 1.1875em;
+        margin-right: $half-space;
+        text-align: center;
+
+        .post-vote-score {
+          border-bottom: 1px solid $border-color;
+          border-top: 1px solid $border-color;
+          padding: 0.25em 0;
+          margin: 0.25em 0;
+        }
+
+        .post-vote-up, .post-vote-down {
+          padding: 0 0.5em;
+
+          .icon {
+            width: 0.8em;
+            height: 0.53em;
+
+            use {
+              fill: $type-alt;
+            }
+          }
+        } // End .post-vote-up,.post-vote-down
+      } // End .post-vote
+
+      .post-title {
+        @include better-box();
+        color: $type;
+        font-size: 1.375em;
+        margin-bottom: $micro-space;
+
+        &:focus, &:active {
+          color: $type;
+        }
+
+        &:hover {
+          color: $brand;
+        }
+      } // End .post-title
+
+      .post-meta {
+        color: $type-alt;
+        font-size: 0.8125em;
+
+        .post-submission-info {
+          margin-bottom: $half-space;
+
+          .post-author {
+            font-weight: bold;
+            margin: 0 0.2em;
           }
         }
-      } // End .post-vote-up,.post-vote-down
-    } // End .post-vote
 
-    .post-title {
-      @include better-box();
-      color: $type;
-      font-size: 1.375em;
-      margin-bottom: $micro-space;
-
-      &:focus, &:active {
-        color: $type;
-      }
-
-      &:hover {
-        color: $brand;
-      }
-    } // End .post-title
-
-    .post-meta {
-      color: $type-alt;
-      font-size: 0.8125em;
-
-      .post-submission-info {
-        margin-bottom: $half-space;
-
-        .post-author {
-          font-weight: bold;
-          margin: 0 0.2em;
+        .post-category {
+          .post-category-pill {
+            border-radius: $half-space;
+            border: 1px solid $border-color;
+            color: $type;
+            padding: 0.3em 0.7em;
+            margin-left: 0.5em;
+          }
         }
-      }
-
-      .post-category {
-        .post-category-pill {
-          border-radius: $half-space;
-          border: 1px solid $border-color;
-          color: $type;
-          padding: 0.3em 0.7em;
-          margin-left: 0.5em;
-        }
-      }
-    } // End .post-meta
-  } // End .post
-} // End .post-list
+      } // End .post-meta
+    } // End .post
+  } // End .post-list
+} // End .post-list-container

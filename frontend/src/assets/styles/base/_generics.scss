@@ -222,6 +222,55 @@
   }
 }
 
+@mixin dropdown-menu() {
+  background: $background;
+  border-radius: 0.25em;
+  box-shadow: rgba(0, 0, 0, 0.2) 0px 1px 17px 0px;;
+  list-style: none;
+  margin-top: 0.5em;
+  max-height: 25em;
+  position: absolute;
+  right: 0;
+  width: 100%;
+  z-index: 5;
+
+  &:after {
+    border-bottom: 0.375em solid $background;
+    border-left: 0.375em solid transparent;
+    border-right: 0.375em solid transparent;
+    content: "";
+    position: absolute;
+    top: -0.375em;
+    z-index: 6;
+  }
+}
+
+@mixin dropdown-menu-item() {
+  @include animate;
+  border-bottom: 1px solid $border-color;
+  color: rgba($type, 0.75);
+  cursor: pointer;
+  font-size: 1em;
+  line-height: 1.4;
+  padding: $half-space;
+
+  &:hover {
+    background: $border-color;
+  }
+
+  &:focus {
+    background: $border-color;
+  }
+
+  &:first-of-type {
+    border-radius: 0.25em 0.25em 0 0;
+  }
+
+  &:last-of-type {
+    border-bottom: 0px;
+    border-radius: 0 0 0.25em 0.25em 0 0;
+  }
+}
 
 .screen {
   height: 100%;
