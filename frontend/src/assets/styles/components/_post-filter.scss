@@ -1,27 +1,42 @@
 .post-filter {
-  margin-bottom: $space;
+  margin-bottom: $double-minor-space;
   border-bottom: 1px solid $border-color;
 
-  .post-filter-list {
-    .post-filter-list-item {
-      @include better-box;
-      color: $type-alt;
-      margin-right: $space;
-      padding: $minor-space 0;
+  .post-filter-inner {
+    @include full-box(flex);
+    flex-direction: row;
 
-      &.active {
-        color: $type;
+    .post-filter-list {
+      .post-filter-list-item {
+        @include better-box;
+        color: $type-alt;
+        height: 100%;
+        margin-right: $space;
+        padding: $minor-space 0;
 
-        &:after {
-          position: absolute;
-          content: '';
-          width: 100%;
-          left: 0;
-          bottom: 0;
-          height: 3px;
-          background-color: $brand;
+        &.active {
+          color: $type;
+
+          &:after {
+            position: absolute;
+            content: '';
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            height: 3px;
+            background-color: $brand;
+          }
         }
       }
+    } // End .post-filter-list
+
+    .post-filter-button-container {
+      padding: 0.5em 0;
+      margin-left: auto;
+
+      button {
+        margin: 0;
+      }
     }
-  }
-}
+  } // End .post-filter-inner
+} // End .post-filter

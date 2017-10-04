@@ -3,24 +3,44 @@ const clone = require('clone')
 let db = {}
 
 const defaultData = {
-  "8xf0y6ziyjabvozdd253nd": {
-    id: '8xf0y6ziyjabvozdd253nd',
-    timestamp: 1467166872634,
+  "1xf0y6ziyjabvozdd253nd": {
+    id: '1xf0y6ziyjabvozdd253nd',
+    timestamp: 1506816000000,
     title: 'Udacity is the best place to learn React',
     body: 'Everyone says so after all.',
-    author: 'thingtwo',
+    author: 'Zach Kuzmic',
     category: 'react',
     voteScore: 6,
     deleted: false
   },
-  "6ni6ok3ym7mf1p33lnez": {
-    id: '6ni6ok3ym7mf1p33lnez',
-    timestamp: 1468479767190,
+  "2ni6ok3ym7mf1p33lnez": {
+    id: '2ni6ok3ym7mf1p33lnez',
+    timestamp: 1502541240000,
     title: 'Learn Redux in 10 minutes!',
     body: 'Just kidding. It takes more than 10 minutes to learn technology.',
-    author: 'thingone',
+    author: 'Elvis Presley',
     category: 'redux',
     voteScore: -5,
+    deleted: false
+  },
+  "3ni6ok3ym7mf1p33lnex": {
+    id: '3ni6ok3ym7mf1p33lnex',
+    timestamp: 1506470400000,
+    title: 'Rails and React',
+    body: 'Taking advantage of both technologies',
+    author: 'Amrit Saini',
+    category: 'rails',
+    voteScore: 0,
+    deleted: false
+  },
+  "4o86ok3ym7mf1p33lnez": {
+    id: '4o86ok3ym7mf1p33lnez',
+    timestamp: 1506729600000,
+    title: 'Web Design for Dummies',
+    body: "You're not a dummy, don't worry!",
+    author: 'Alex Martinez',
+    category: 'design',
+    voteScore: 1,
     deleted: false
   }
 }

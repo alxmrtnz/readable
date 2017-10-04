@@ -15,12 +15,14 @@ class Landing extends Component {
         </Helmet>
         <Nav />
         <PostFilter />
-        <div className="wrap landing-canvas">
-          <div className="landing-canvas-content">
-            <PostList />
-          </div>
-          <div className="landing-canvas-sidebar">
-            <CategoryList />
+        <div className="wrap">
+          <div className="landing-canvas">
+            <div className="landing-canvas-content">
+              <PostList />
+            </div>
+            <div className="landing-canvas-sidebar">
+              <CategoryList />
+            </div>
           </div>
         </div>
       </div>

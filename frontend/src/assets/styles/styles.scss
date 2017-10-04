@@ -45,14 +45,14 @@ $phone: 680px;
 // Color
 $background: #FFFFFF;
 $background-alt: #F8F8FA;
-$border-color: #EAE9F1;
+$border-color: #E4E6EA;
 $brand: #FE6861;
 $brand-light: lighten($brand, 30%);
 $brand-dark: darken($brand, 30%);
 $error: #85260D;
 $form-border: #D6D4E3;
 $type: #201C3A;
-$type-alt: #8F8D9C;
+$type-alt: #7E8496;
 
 // Space
 $base: 16px;
@@ -126,8 +126,10 @@ $border-radius: 0.250em;
 
 // COMPONENTS
 // ----------------------------------------------------------------------------------------------------
+@import './components/button';
 @import './components/nav';
 @import './components/post-filter';
+@import './components/post-list';
 
 // SCREENS
 // ----------------------------------------------------------------------------------------------------

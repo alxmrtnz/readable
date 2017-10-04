@@ -7,7 +7,7 @@ class Nav extends Component {
       <nav className="nav">
         <div className="wrap">
           <div className="nav-logo">
-            Readable!
+            Udacilist
           </div>
         </div>
       </nav>

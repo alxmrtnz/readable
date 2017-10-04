@@ -1,0 +1,45 @@
+.btn {
+  @include cta;
+
+  &.btn-secondary {
+    // @include cta(rgba($background, 0.7), $brand, , r);
+    color: $background;
+    background: $brand;
+    border-color: $brand;
+
+    svg {
+      & use {
+        fill: $background;
+      }
+    }
+  }// End .btn.btn-secondary
+
+  &.btn-secondary-contrast {
+    color: rgba($background, 0.7);
+    background: $brand;
+    border-color: rgba($background, 0.4);
+
+    svg {
+      & use {
+        fill: rgba($background, 0.7);
+      }
+    }
+  }
+
+  &.btn-tertiary {
+    // @include cta(rgba($background, 0.7), $brand, , r);
+    color: rgba($background, 0.8);
+    background: $brand-dark;
+    border-color: $brand-dark;
+
+    svg {
+      & use {
+        fill: rgba($background, 0.8);
+      }
+    }
+  } // End .btn.btn-tertiary
+
+  &.full-width {
+    width: 100%;
+  }
+} // End .btn
