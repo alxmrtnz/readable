@@ -3,18 +3,18 @@ import { connect } from 'react-redux'
 import Dropdown from 'react-dropdown';
 
 // Actions
-import { fetchPosts } from '../../actions/posts'
+import { fetchPosts, voteOnPost } from '../../actions/posts'
+
 
 // Components
 import Icon from '../Icon/Icon'
 
 class PostList extends Component {
   componentDidMount() {
-    this.props.fetchPosts()
+    this.props.fetchAllPosts()
   }
 
-  getNumberOfDaysFrom(datePast) {
-
+  getNumberOfDaysFromDate(datePast) {
     // //Get 1 day in milliseconds
     let oneDay=1000*60*60*24;
     let dateToday = Date.now();
@@ -41,8 +41,6 @@ class PostList extends Component {
   render() {
     let { posts } = this.props
 
-    posts.sort(this.sortBy('voteScore', false, parseInt));
-
     const dropdownOptions = [
       'Popularity',
       'Most Recent',
@@ -68,34 +66,40 @@ class PostList extends Component {
           </div>
         </div>
         <ul className='post-list'>
-          {posts.map( (post) =>
-            <li key={post.id} className="post">
+          {Object.keys(posts).map( (post) =>
+            <li key={posts[post].id} className="post">
               <div className="post-vote">
-                <div className="post-vote-up">
+                <div
+                  className="post-vote-up"
+                  onClick={() => this.props.upVotePost(posts[post].id)}
+                >
                   <Icon type="triangle-up" />
                 </div>
                 <div className="post-vote-score">
-                  {post.voteScore}
+                  {posts[post].voteScore}
                 </div>
-                <div className="post-vote-down">
+                <div
+                  className="post-vote-down"
+                  onClick={() => this.props.downVotePost(posts[post].id)}
+                >
                   <Icon type="triangle-down" />
                 </div>
               </div>
               <div className="post-info">
                 <a href="" className="post-title">
-                  {post.title}
+                  {posts[post].title}
                 </a>
                 <div className="post-meta">
                   <div className="post-submission-info">
-                    Submitted {this.getNumberOfDaysFrom(post.timestamp)} days ago by
+                    Submitted {this.getNumberOfDaysFromDate(posts[post].timestamp)} days ago by
                     <span className="post-author">
-                      {post.author}
+                      {posts[post].author}
                     </span>
                   </div>
                   <div className="post-category">
                     Category:
                     <span className="post-category-pill">
-                      {post.category}
+                      {posts[post].category}
                     </span>
                   </div>
                 </div>
@@ -116,7 +120,9 @@ function mapStateToProps ({ posts }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchPosts: () => dispatch(fetchPosts())
+    fetchAllPosts: () => dispatch(fetchPosts()),
+    upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
+    downVotePost: (id) => dispatch(voteOnPost(id, 'downVote'))
   }
 }
 

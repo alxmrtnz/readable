@@ -14,7 +14,7 @@ class PostFilter extends Component {
                 Top
               </li>
               <li className="post-filter-list-item">
-                New
+               <a href="/category">New</a>
               </li>
             </ul>
             <div className="post-filter-button-container">

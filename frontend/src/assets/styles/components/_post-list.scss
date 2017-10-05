@@ -46,11 +46,16 @@
           border-bottom: 1px solid $border-color;
           border-top: 1px solid $border-color;
           padding: 0.25em 0;
-          margin: 0.25em 0;
         }
 
         .post-vote-up, .post-vote-down {
-          padding: 0 0.5em;
+          cursor: pointer;
+          padding: 0.25em 0.5em;
+          transition: all 0.2s;
+
+          &:hover {
+            background: #eee;
+          }
 
           .icon {
             width: 0.8em;
