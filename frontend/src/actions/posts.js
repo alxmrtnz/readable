@@ -9,6 +9,7 @@ export const GET_POSTS = 'GET_POSTS';
 // export const VOTE_ON_POST = 'VOTE_ON_POST';
 export const UP_VOTE_POST = 'UP_VOTE_POST';
 export const DOWN_VOTE_POST = 'DOWN_VOTE_POST';
+export const SORT_POSTS = 'SORT_POSTS';
 // export const DELETE_POST = 'DELETE_POST';
 
 
@@ -48,6 +49,44 @@ export const voteOnPost = (id, type) => dispatch => {
           dispatch(sendDownVote(post))
         })
       }
+    }
+  )
+}
+
+export const sendSortedPosts = (posts) => ({
+  type: SORT_POSTS,
+  posts
+})
+
+export const sortPosts = (sortOption) => dispatch => {
+    console.log('sort option: ', sortOption)
+
+    API.fetchAllPosts().then(posts => {
+      function sortBy(field, reverse, primer){
+
+        var key = primer ?
+          function(x) {return primer(x[field])} :
+          function(x) {return x[field]};
+
+        reverse = !reverse ? 1 : -1;
+
+        return function (a, b) {
+          return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+        }
+      }
+
+      let postsArray = Object.keys(posts).map(function(key) {
+        return posts[key];
+      });
+
+      let sortedPosts = postsArray.sort(sortBy(sortOption, true, parseInt))
+
+      let objectOfSortedPosts =  sortedPosts.reduce((posts, post) => {
+        posts[post.id] = post
+        return posts
+      }, {})
+
+      dispatch(sendSortedPosts(objectOfSortedPosts))
     }
   )
 }

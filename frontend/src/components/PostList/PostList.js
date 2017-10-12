@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Dropdown from 'react-dropdown';
+import Dropdown from 'react-dropdown'
 
 // Actions
-import { fetchPosts, voteOnPost } from '../../actions/posts'
+import { fetchPosts, voteOnPost, sortPosts } from '../../actions/posts'
 
 
 // Components
@@ -12,6 +12,7 @@ import Icon from '../Icon/Icon'
 class PostList extends Component {
   componentDidMount() {
     this.props.fetchAllPosts()
+    this.props.sortPostList('voteScore')
   }
 
   getNumberOfDaysFromDate(datePast) {
@@ -24,47 +25,11 @@ class PostList extends Component {
     return Math.round(differenceInMS/oneDay);
   }
 
-  sortBy(field, reverse, primer){
-
-     var key = primer ?
-         function(x) {return primer(x[field])} :
-         function(x) {return x[field]};
-
-     reverse = !reverse ? 1 : -1;
-
-     return function (a, b) {
-         return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
-       }
-  }
-
-
   render() {
-    let { posts } = this.props
-
-    const dropdownOptions = [
-      'Popularity',
-      'Most Recent',
-    ]
+    let { posts } = this.props;
 
     return (
       <div className="post-list-container">
-        <div className="post-list-header">
-          <h2 className="post-list-header-heading">
-            Top Posts
-          </h2>
-          <div className="dropdown-container">
-            <div className="dropdown-label">
-              Sorted by
-            </div>
-            <Dropdown
-              className="dropdown-button "
-              options={dropdownOptions}
-              // onChange={data => this.handleInputChange({creditCardExpirationMonth: data.value})}
-              value={dropdownOptions[0]}
-              placeholder="Select an option"
-            />
-          </div>
-        </div>
         <ul className='post-list'>
           {Object.keys(posts).map( (post) =>
             <li key={posts[post].id} className="post">
@@ -122,7 +87,8 @@ function mapDispatchToProps (dispatch) {
   return {
     fetchAllPosts: () => dispatch(fetchPosts()),
     upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
-    downVotePost: (id) => dispatch(voteOnPost(id, 'downVote'))
+    downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
+    sortPostList: (sortOption) => dispatch(sortPosts(sortOption))
   }
 }
 

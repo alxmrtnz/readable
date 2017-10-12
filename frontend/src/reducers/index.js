@@ -1,9 +1,7 @@
-import * as API from '../utils/api'
-
 import { combineReducers } from 'redux'
 
 import { GET_ALL_CATEGORIES } from '../actions/categories'
-import { GET_POSTS, UP_VOTE_POST, DOWN_VOTE_POST } from '../actions/posts'
+import { GET_POSTS, UP_VOTE_POST, DOWN_VOTE_POST, SORT_POSTS } from '../actions/posts'
 
 export function categories(state = {}, action){
   switch (action.type) {
@@ -26,9 +24,9 @@ export function posts(state = [], action){
         posts[post.id] = post
         return posts
       }, {})
+
       return objectOfPosts
     case UP_VOTE_POST:
-    console.log('POST: ', post)
       // Increment vote score
       return {
         ...state,
@@ -40,6 +38,8 @@ export function posts(state = [], action){
         ...state,
         [post.id]: post
       }
+    case SORT_POSTS:
+      return posts
     default:
       return state
   }

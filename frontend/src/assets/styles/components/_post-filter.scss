@@ -10,9 +10,14 @@
       .post-filter-list-item {
         @include better-box;
         color: $type-alt;
+        cursor: pointer;
         height: 100%;
         margin-right: $space;
         padding: $minor-space 0;
+
+        &:hover {
+          color: $type;
+        }
 
         &.active {
           color: $type;

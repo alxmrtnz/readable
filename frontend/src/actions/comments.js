@@ -8,7 +8,7 @@ export const POST_COMMENT = 'POST_COMMENT';
 // export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
-    let newComment = {
+  let newComment = {
     id: '123',
     parentId: "1",
     timestamp: 1468166872634,
