@@ -1,7 +1,12 @@
 import { combineReducers } from 'redux'
 
 import { GET_ALL_CATEGORIES } from '../actions/categories'
-import { GET_POSTS, UP_VOTE_POST, DOWN_VOTE_POST, SORT_POSTS } from '../actions/posts'
+import {
+    GET_POSTS,
+    UP_VOTE_POST,
+    DOWN_VOTE_POST,
+    ADD_POST
+} from '../actions/posts'
 
 export function categories(state = {}, action){
   switch (action.type) {
@@ -20,12 +25,13 @@ export function posts(state = [], action){
 
   switch (action.type) {
     case GET_POSTS:
-      let objectOfPosts =  posts.reduce((posts, post) => {
-        posts[post.id] = post
-        return posts
-      }, {})
-
-      return objectOfPosts
+      return posts
+    case ADD_POST:
+      console.log('add post reducer called')
+      return {
+        ...state,
+        [post.id]: post
+      }
     case UP_VOTE_POST:
       // Increment vote score
       return {
@@ -38,8 +44,6 @@ export function posts(state = [], action){
         ...state,
         [post.id]: post
       }
-    case SORT_POSTS:
-      return posts
     default:
       return state
   }

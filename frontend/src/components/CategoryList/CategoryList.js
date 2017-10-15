@@ -1,17 +1,18 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
-// Actions
-import { fetchCategories } from '../../actions/categories'
 
 class CategoryList extends Component {
+
   componentDidMount() {
-    this.props.fetchCategories()
-    // this.props.getAllPosts()
+    console.log('category list mounted')
   }
 
   render() {
     let { categories } = this.props;
+
+    console.log('Categories: ', categories)
 
     return (
       <div className="category-list">
@@ -19,7 +20,9 @@ class CategoryList extends Component {
         <ul className='category-list'>
           {Object.keys(categories).map((name) => (
             <li key={name} >
-              {categories[name]}
+              <Link to={`/${categories[name]}`} >
+                {categories[name]}
+              </Link>
             </li>
           ))}
         </ul>
@@ -36,7 +39,7 @@ function mapStateToProps ({ categories }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchCategories: () => dispatch(fetchCategories()),
+    // fetchCategories: () => dispatch(fetchCategories()),
     // remove: (data) => dispatch(removeFromCalendar(data))
   }
 }

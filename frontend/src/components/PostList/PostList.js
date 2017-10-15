@@ -1,9 +1,13 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import Dropdown from 'react-dropdown'
+import { Link } from 'react-router-dom'
 
 // Actions
-import { fetchPosts, voteOnPost, sortPosts } from '../../actions/posts'
+import {
+  voteOnPost,
+  sortPosts,
+  getPostsByCategory
+} from '../../actions/posts'
 
 
 // Components
@@ -11,8 +15,8 @@ import Icon from '../Icon/Icon'
 
 class PostList extends Component {
   componentDidMount() {
-    this.props.fetchAllPosts()
-    this.props.sortPostList('voteScore')
+    // this.props.sortPostList('voteScore')
+    this.props.getCategoryPosts('react');
   }
 
   getNumberOfDaysFromDate(datePast) {
@@ -51,9 +55,12 @@ class PostList extends Component {
                 </div>
               </div>
               <div className="post-info">
-                <a href="" className="post-title">
+                <Link
+                  className="post-title"
+                  to={`post/${posts[post].id}`}
+                >
                   {posts[post].title}
-                </a>
+                </Link>
                 <div className="post-meta">
                   <div className="post-submission-info">
                     Submitted {this.getNumberOfDaysFromDate(posts[post].timestamp)} days ago by
@@ -85,10 +92,10 @@ function mapStateToProps ({ posts }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    fetchAllPosts: () => dispatch(fetchPosts()),
     upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
     downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
-    sortPostList: (sortOption) => dispatch(sortPosts(sortOption))
+    sortPostList: (sortOption) => dispatch(sortPosts(sortOption)),
+    getCategoryPosts: (category) => dispatch(getPostsByCategory(category))
   }
 }
 

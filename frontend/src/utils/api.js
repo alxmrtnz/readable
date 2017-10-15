@@ -37,6 +37,7 @@ export const fetchPostDetail = (postId) =>
     .then(res => res.json())
     .then(data => data)
 
+
 export const votePost = (postId, isUp) => {
   const body = {option: isUp ? 'upVote':'downVote'}
   return fetch(`${api}/posts/${postId}`, {

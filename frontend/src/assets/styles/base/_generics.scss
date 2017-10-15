@@ -123,6 +123,10 @@
   } // End &-destroy
 } // End cta mixin
 
+.cta {
+  @include cta();
+}
+
 @mixin loading($color: $brand, $loader-color: $background) {
   background-color: $color;
   height: 100%;

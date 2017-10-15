@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 // Actions
 import { sortPosts } from '../../actions/posts'
@@ -53,9 +54,13 @@ class PostFilter extends Component {
               </li>
             </ul>
             <div className="post-filter-button-container">
-              <Button
-                label="Add Post"
-              />
+              <Link
+                to="/post/add"
+              >
+                <Button
+                  label="Add Post"
+                />
+              </Link>
             </div>
           </div>
         </div>

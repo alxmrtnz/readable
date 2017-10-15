@@ -42,7 +42,17 @@ const defaultData = {
     category: 'design',
     voteScore: 1,
     deleted: false
-  }
+  },
+  "5xf0y6ziyjabvozdd253nd": {
+    id: '5xf0y6ziyjabvozdd253nd',
+    timestamp: 1406816000000,
+    title: 'A New Way to React',
+    body: 'Everyone says so after all.',
+    author: 'Zach George',
+    category: 'react',
+    voteScore: 22,
+    deleted: false
+  },
 }
 
 function getData (token) {

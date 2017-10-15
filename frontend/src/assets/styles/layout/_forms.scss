@@ -59,6 +59,10 @@ input {
   }
 } // End input
 
+select {
+  @include form-element();
+}
+
 @mixin label {
   @include full-box;
   color: $brand-light;

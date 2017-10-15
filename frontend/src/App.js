@@ -1,11 +1,6 @@
 import React, { Component } from 'react'
-import { Route } from 'react-router-dom'
-import * as API from './utils/api'
-
-import { createComment } from './utils/api'
-
-// Actions
-import { fetchCategories } from './actions/categories'
+import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 // Assets
 import './assets/styles/styles.css'
@@ -14,31 +9,65 @@ import './assets/styles/styles.css'
 import SVGSprite from './components/SVGSprite/SVGSprite'
 import HeadMeta from './components/HeadMeta/HeadMeta'
 
+// Actions
+import { fetchCategories } from './actions/categories'
+import { fetchPosts } from './actions/posts'
+
 // Screens
 import Landing from './screens/Landing'
+import CategoryView from './screens/CategoryView'
+import AddPostView from './screens/AddPostView'
+import PostView from './screens/PostView'
 
 class App extends Component {
+  componentDidMount() {
+    this.props.fetchCategories()
+    this.props.fetchAllPosts()
+  }
 
   render() {
     return (
       <div className="App">
         <HeadMeta />
         <SVGSprite />
-        <Route exact path="/" render={() => (
-          <Landing />
-        )}/>
-        <Route path="/category" render={() => (
-          <div>category view</div>
-        )} />
-        <Route path="/post-detail" render={() => (
-          <div>post-detail view</div>
-        )} />
-        <Route path="/create-edit" render={() => (
-          <div>create/edit view</div>
-        )} />
+        <BrowserRouter>
+          <Switch>
+            <Route exact path="/" render={() => (
+              <Landing />
+            )}/>
+            <Route exact path={'/:category'} render={(props) => (
+              <CategoryView {...props} />
+            )} />
+            <Route path="/post/add" render={(props) => (
+              <AddPostView {...props} />
+            )} />
+            <Route path="/post/:postId" render={(props) => (
+              <PostView {...props} />
+            )} />
+            <Route path="/create-edit" render={() => (
+              <div>create/edit view</div>
+            )} />
+          </Switch>
+        </BrowserRouter>
       </div>
     );
   }
 }
 
-export default App;
+function mapStateToProps ({ categories }) {
+  return {
+    categories
+  }
+}
+
+function mapDispatchToProps (dispatch) {
+  return {
+    fetchCategories: () => dispatch(fetchCategories()),
+    fetchAllPosts: () => dispatch(fetchPosts()),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
