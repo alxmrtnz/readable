@@ -15,9 +15,19 @@
 //     var privateName = createUniqueKey();
 //     var o = { 'public': 'foo' };
 //     o[privateName] = 'bar';
-export const createUniqueKey =  () => {
+export const createUniqueKey = () => {
   // Math.random should be unique because of its seeding algorithm.
   // Convert it to base 36 (numbers + letters), and grab the first 9 characters
   // after the decimal.
   return '_' + Math.random().toString(36).substr(2, 9);
 };
+
+export const getNumberOfDaysFromDate = (datePast) => {
+  // //Get 1 day in milliseconds
+  let oneDay=1000*60*60*24;
+  let dateToday = Date.now();
+
+  // // Calculate the difference in milliseconds
+  let differenceInMS = dateToday - datePast;
+  return Math.round(differenceInMS/oneDay);
+}

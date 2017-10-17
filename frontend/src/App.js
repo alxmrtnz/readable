@@ -16,7 +16,7 @@ import { fetchPosts } from './actions/posts'
 // Screens
 import Landing from './screens/Landing'
 import CategoryView from './screens/CategoryView'
-import AddPostView from './screens/AddPostView'
+import AddEditPostView from './screens/AddEditPostView'
 import PostView from './screens/PostView'
 
 class App extends Component {
@@ -39,10 +39,13 @@ class App extends Component {
               <CategoryView {...props} />
             )} />
             <Route path="/post/add" render={(props) => (
-              <AddPostView {...props} />
+              <AddEditPostView {...props} />
             )} />
-            <Route path="/post/:postId" render={(props) => (
+            <Route exact path="/post/:postId" render={(props) => (
               <PostView {...props} />
+            )} />
+            <Route exact path="/post/:postId/edit" render={(props) => (
+              <AddEditPostView {...props} />
             )} />
             <Route path="/create-edit" render={() => (
               <div>create/edit view</div>

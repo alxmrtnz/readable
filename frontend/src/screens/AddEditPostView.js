@@ -16,7 +16,7 @@ import {
   createPost,
 } from '../actions/posts'
 
-class AddPostView extends Component {
+class AddEditPostView extends Component {
 
   state = {
     post: {
@@ -31,17 +31,31 @@ class AddPostView extends Component {
     }
   }
 
-  getCurPost() {
-    // const postId = this.props.match.params.postId
-    // if (postId !== undefined) {
-    //   const newPosts = this.props.posts.filter((post) => {
-    //     return post.id === postId
-    //   })
-    //   if (newPosts.length > 0) {
-    //     return newPosts[0]
-    //   }
-    // }
-    // return undefined
+  componentDidMount() {
+    let { posts } = this.props
+    const postId = this.props.match.params.postId
+    let currentPost = posts[postId]
+
+    if (currentPost !== undefined) {
+      this.updatePost(currentPost)
+    }
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    let { posts } = nextProps
+    const postId = this.props.match.params.postId
+    let currentPost = posts[postId]
+
+    if (currentPost !== undefined) {
+      this.updatePost(currentPost)
+    }
+  }
+
+  updatePost = (newPost) => {
+    this.setState(state => ({
+      ...state,
+      post: newPost
+    }))
   }
 
   convertCategoriesObjectToArray(categories) {
@@ -163,4 +177,4 @@ function mapDispatchToProps (dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(AddPostView)
+)(AddEditPostView)

@@ -1,0 +1,86 @@
+.post {
+  @include full-box(flex);
+  padding: $double-minor-space 0;
+  border-bottom: 1px solid $border-color;
+
+  &:first-of-type {
+    padding-top: 1.5rem;
+  }
+
+  .post-vote {
+    border-radius: $border-radius;
+    border: 1px solid $border-color;
+    font-size: 1.1875em;
+    margin-right: $half-space;
+    text-align: center;
+
+    .post-vote-score {
+      border-bottom: 1px solid $border-color;
+      border-top: 1px solid $border-color;
+      padding: 0.25em 0;
+    }
+
+    .post-vote-up, .post-vote-down {
+      cursor: pointer;
+      padding: 0.25em 0.5em;
+      transition: all 0.2s;
+
+      &:hover {
+        background: #eee;
+      }
+
+      .icon {
+        width: 0.8em;
+        height: 0.53em;
+
+        use {
+          fill: $type-alt;
+        }
+      }
+    } // End .post-vote-up,.post-vote-down
+  } // End .post-vote
+
+  .post-title {
+    @include better-box();
+    color: $type;
+    font-size: 1.375em;
+    margin-bottom: $micro-space;
+
+    &:focus, &:active {
+      color: $type;
+    }
+
+    &:hover {
+      color: $brand;
+    }
+  } // End .post-title
+
+  .post-meta {
+    color: $type-alt;
+    font-size: 0.8125em;
+
+    .post-submission-info {
+      margin-bottom: $half-space;
+
+      .post-author {
+        font-weight: bold;
+        margin: 0 0.2em;
+      }
+    }
+
+    .post-category {
+      .post-category-pill {
+        border-radius: $half-space;
+        border: 1px solid $border-color;
+        color: $type;
+        padding: 0.3em 0.7em;
+        margin-left: 0.5em;
+      }
+    }
+  } // End .post-meta
+
+  .post-body {
+    margin-bottom: $space;
+    white-space: pre-wrap;
+  } // End .post-body
+} // End .post
