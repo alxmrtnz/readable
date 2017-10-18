@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-// import { Link } from 'react-router-dom'
 import { Helmet } from "react-helmet"
 import Select from 'react-select';
 import { createUniqueKey } from '../utils/utils'
@@ -108,7 +107,7 @@ class AddEditPostView extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    let postToSubmit = this.state.post;
+    let postToSubmit = this.state.post
 
     if (this.state.updatingPost) {
       this.props.updatePost(postToSubmit)
@@ -125,8 +124,6 @@ class AddEditPostView extends Component {
     let { post, updatingPost } = this.state
     let selectOptions = this.convertCategoriesObjectToArray(categories)
 
-    console.log('post state: ', post)
-
     return (
       <div className="add-post">
         <Nav />
@@ -140,26 +137,26 @@ class AddEditPostView extends Component {
                 name="title"
                 type="text"
                 placeholder="Title"
-                // value={post.title}
+                value={post.title}
                 onChange={event => this.handleInputChange({title: event.target.value})}
               />
               <input
                 name="author"
                 type="text"
                 placeholder="Author"
-                // value={post.author}
+                value={post.author}
                 onChange={event => this.handleInputChange({author: event.target.value})}
               />
               <textarea
                 name="body"
                 type="text"
                 placeholder="Body"
-                // value={post.body}
+                value={post.body}
                 onChange={event => this.handleInputChange({body: event.target.value})}
               />
               <Select
                 name="form-field-name"
-                value={'hi'}
+                value={post.category}
                 placeholder="Select a category..."
                 resetValue=""
                 options={selectOptions}

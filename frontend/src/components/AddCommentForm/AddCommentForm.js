@@ -1,10 +1,24 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { createUniqueKey } from '../../utils/utils'
+
+// Actions
+import {
+  createComment
+} from '../../actions/comments'
 
 class AddCommentForm extends Component {
   state = {
-    postId: '',
-    comment: ''
+    comment: {
+      id: '',
+      parentId: "",
+      timestamp: '',
+      body: '',
+      author: 'George Harrison',
+      voteScore: 1,
+      deleted: false,
+      parentDeleted: false
+    }
   }
 
   componentDidMount() {
@@ -13,22 +27,49 @@ class AddCommentForm extends Component {
     if (postId !== undefined) {
       this.setState(state => ({
         ...state,
-        postId: postId,
+        comment: {
+          ...state.comment,
+          parentId: postId
+        }
       }))
     }
+  }
+
+  resetState() {
+    this.setState(state => ({
+      ...state,
+      comment: {
+        id: '',
+        parentId: "",
+        timestamp: '',
+        body: '',
+        author: 'George Harrison',
+        voteScore: 1,
+        deleted: false,
+        parentDeleted: false
+      }
+    }))
   }
 
   handleInputChange(newPartialInput) {
     this.setState(state => ({
       ...state,
-      comment: newPartialInput
+      comment: {
+        ...state.comment,
+        ...newPartialInput,
+      }
     }))
   }
 
   handleSubmit = (event) => {
     event.preventDefault()
+    let commentToSubmit = this.state.comment
 
-    console.log(this.state.postId)
+    commentToSubmit.id = createUniqueKey()
+    commentToSubmit.timestamp = Date.now()
+    this.props.createComment(commentToSubmit)
+
+    this.resetState()
   }
 
   render() {
@@ -41,8 +82,8 @@ class AddCommentForm extends Component {
             name="comment"
             type="text"
             placeholder="Add a Comment"
-            value={comment}
-            onChange={event => this.handleInputChange( event.target.value)}
+            value={comment.body}
+            onChange={event => this.handleInputChange({body: event.target.value})}
           />
           <button
             className="cta"
@@ -56,9 +97,8 @@ class AddCommentForm extends Component {
   }
 }
 
-function mapStateToProps ({ posts, comments }) {
+function mapStateToProps ({ comments }) {
   return {
-    posts,
     comments
   }
 }
@@ -71,6 +111,7 @@ function mapDispatchToProps (dispatch) {
     // upVoteComment: (id) => dispatch(voteOnComment(id, true)),
     // downVoteComment: (id) => dispatch(voteOnComment(id, false)),
     // deletePost: (id, history) => dispatch(deletePost(id, history))
+    createComment: (comment) => dispatch(createComment(comment))
   }
 }
 

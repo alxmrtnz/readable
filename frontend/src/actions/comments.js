@@ -2,7 +2,7 @@ import * as API from '../utils/api'
 
 // export const FETCH_COMMENTS_FOR_POST = 'FETCH_COMMENTS_FOR_POST';
 export const GET_POST_COMMENTS = 'GET_POST_COMMENTS';
-// export const POST_COMMENT = 'POST_COMMENT';
+export const ADD_COMMENT = 'ADD_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
 // export const UP_VOTE_COMMENT = 'UP_VOTE_COMMENT';
 // export const DOWN_VOTE_COMMENT = 'DOWN_VOTE_COMMENT';
@@ -10,26 +10,21 @@ export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
 // export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
-  // let newComment = {
-  //   id: '123',
-  //   parentId: "1",
-  //   timestamp: 1468166872634,
-  //   body: 'Hi there! I am a COMMENT.',
-  //   author: 'thingtwo',
-  //   voteScore: 6,
-  //   deleted: false,
-  //   parentDeleted: false
-  // }
+  export function addComment(comment) {
+    return {
+      type: ADD_COMMENT,
+      comment
+    }
+  }
 
-  // createComment(newComment).then(data =>
-  //   console.log(data),
-  // )
-  // export function addComment(comment) {
-  //   return {
-  //     type: POST_COMMENT,
-  //     comment
-  //   }
-  // }
+  // Adding a Comment
+  export const createComment = (comment) => (dispatch) => {
+    API.createComment(comment).then(comment => {
+        console.log('new comments: ', comment)
+        dispatch(addComment(comment))
+      }
+    )
+  }
 
   // Comment Fetching
   const receiveCommentsForPost = (comments) => ({

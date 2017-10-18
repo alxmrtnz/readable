@@ -8,12 +8,13 @@ import { getNumberOfDaysFromDate } from '../utils/utils'
 
 // Actions
 import { voteOnPost, deletePost } from '../actions/posts'
-import { fetchCommentsForPost, voteOnComment } from '../actions/comments'
+import { fetchCommentsForPost } from '../actions/comments'
 
 // Components
 import Nav from '../components/Nav/Nav'
 import Icon from '../components/Icon/Icon'
 import AddCommentForm from '../components/AddCommentForm/AddCommentForm'
+import Comment from '../components/Comment/Comment'
 
 class PostView extends Component {
 
@@ -25,7 +26,6 @@ class PostView extends Component {
     const postId = this.props.match.params.postId
 
     if (postId !== undefined) {
-      console.log('got post id')
       this.props.fetchComments(postId)
     }
   }
@@ -111,8 +111,6 @@ class PostView extends Component {
 
   render() {
     let { comments } = this.props
-    // let { postLoaded } = this.state
-    // console.log('comments on the post: ', comments)
     return (
       <div className="post-view">
         <Nav />
@@ -126,29 +124,7 @@ class PostView extends Component {
           />
           <div className="post-comments">
             {comments.map((comment) => (
-              <div key={comment.id} className="comment">
-                <div className="comment-meta">
-                  {comment.author}  |  {comment.timestamp}
-                </div>
-                <div className="comment-body">
-                  {comment.body}
-                </div>
-                <div className="comment-actions">
-                  <div className="comment-vote-container">
-                    <div className="comment-voter-arrows">
-                      <div
-                        className="comment-voter up"
-                        onClick={() => this.props.upVoteComment(comment.id)}
-                      />
-                      <div
-                        className="comment-voter down"
-                        onClick={() => this.props.downVoteComment(comment.id)}
-                      />
-                    </div>
-                    {comment.voteScore} points
-                  </div>
-                </div>
-              </div>
+              <Comment key={comment.id} commentObject={comment}/>
             ))}
           </div>
         </div>
@@ -170,8 +146,6 @@ function mapDispatchToProps (dispatch) {
     upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
     downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
     fetchComments: (id) => dispatch(fetchCommentsForPost(id)),
-    upVoteComment: (id) => dispatch(voteOnComment(id, true)),
-    downVoteComment: (id) => dispatch(voteOnComment(id, false)),
     deletePost: (id, history) => dispatch(deletePost(id, history))
   }
 }

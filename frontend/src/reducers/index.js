@@ -7,8 +7,15 @@ import {
     UPDATE_POST,
     DELETE_POST
 } from '../actions/posts'
+
 import { GET_ALL_CATEGORIES } from '../actions/categories'
-import { GET_POST_COMMENTS, VOTE_ON_COMMENT } from '../actions/comments'
+
+import {
+  GET_POST_COMMENTS,
+  VOTE_ON_COMMENT,
+  ADD_COMMENT
+} from '../actions/comments'
+
 import { UPDATE_SORT_ORDER } from '../actions/sort'
 
 export function categories(state = {}, action){
@@ -32,7 +39,7 @@ export function posts(state = [], action){
     case GET_POSTS:
       return posts
     case ADD_POST:
-      newState = state
+      newState = [...state]
       newState.push(post)
       return newState
     case UPDATE_POST:
@@ -94,6 +101,10 @@ export function comments(state = [], action){
       newState.sort(function(a, b) {
           return parseFloat(b.voteScore) - parseFloat(a.voteScore);
       });
+      return newState
+    case ADD_COMMENT:
+      newState = [...state]
+      newState.push(comment)
       return newState
     default:
       return state
