@@ -1,20 +1,16 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from "react-helmet"
-import { Link } from 'react-router-dom'
-
-// Utilities
-import { getNumberOfDaysFromDate } from '../utils/utils'
 
 // Actions
 import { voteOnPost, deletePost } from '../actions/posts'
 import { fetchCommentsForPost } from '../actions/comments'
 
 // Components
-import Nav from '../components/Nav/Nav'
-import Icon from '../components/Icon/Icon'
 import AddCommentForm from '../components/AddCommentForm/AddCommentForm'
 import Comment from '../components/Comment/Comment'
+import Nav from '../components/Nav/Nav'
+import Post from '../components/Post/Post'
 
 class PostView extends Component {
 
@@ -47,68 +43,15 @@ class PostView extends Component {
   renderPost() {
     let post = this.getCurPost()
     let { history } = this.props
-    let { comments } = this.props
-
-    console.log(comments.length, ' comments here')
 
     if (post !== undefined) {
       return (
-        <div key={post.id} className="post">
-          <div className="post-vote-container">
-            <div className="post-vote">
-              <div
-                className="post-vote-up"
-                onClick={() => this.props.upVotePost(post.id)}
-              >
-                <Icon type="triangle-up" />
-              </div>
-              <div className="post-vote-score">
-                {post.voteScore}
-              </div>
-              <div
-                className="post-vote-down"
-                onClick={() => this.props.downVotePost(post.id)}
-              >
-                <Icon type="triangle-down" />
-              </div>
-            </div>
-          </div>
-          <div className="post-info">
-            <div className="post-title" >
-              {post.title}
-            </div>
-            <div className="post-meta">
-              <div className="post-submission-info">
-                Submitted {getNumberOfDaysFromDate(post.timestamp)} days ago by
-                <span className="post-author">
-                  {post.author}
-                </span>
-                  {comments.length} comment{comments.length > 1 ? 's' : ''}
-              </div>
-            </div>
-            <div className="post-body">
-              {post.body}
-            </div>
-            <div className="post-meta">
-              <div className="post-category">
-                Category:
-                <span className="post-category-pill">
-                  {post.category}
-                </span>
-              </div>
-            </div>
-            <div className="post-actions">
-              <Link to={`/post/${post.id}/edit`}>
-                Edit Post
-              </Link>
-              <a
-                onClick={() => this.props.deletePost(post.id, history)}
-              >
-                Delete Post
-              </a>
-            </div>
-          </div>
-        </div>
+        <Post
+          key={post.id}
+          postObject={post}
+          history={history}
+          postView={true}
+        />
       )
     }
   }

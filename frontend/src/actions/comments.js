@@ -31,6 +31,7 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
 
   export const fetchCommentsForPost = (id) => dispatch => {
     API.fetchComments(id).then(comments => {
+        // console.log('comments for post: ', comments)
         dispatch(receiveCommentsForPost(comments))
       }
     )
