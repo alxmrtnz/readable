@@ -7,26 +7,26 @@ import { Link } from 'react-router-dom'
 import { getNumberOfDaysFromDate } from '../utils/utils'
 
 // Actions
-import {
-  voteOnPost
-} from '../actions/posts'
+import { voteOnPost, deletePost } from '../actions/posts'
+import { fetchCommentsForPost, voteOnComment } from '../actions/comments'
 
 // Components
 import Nav from '../components/Nav/Nav'
 import Icon from '../components/Icon/Icon'
+import AddCommentForm from '../components/AddCommentForm/AddCommentForm'
 
 class PostView extends Component {
 
   state = {
-    post: {
-      id: "",
-      timestamp: "",
-      title: "",
-      body: "",
-      author: "",
-      category: "",
-      voteScore: "0",
-      deleted: false
+    postLoaded: false
+  }
+
+  componentDidMount() {
+    const postId = this.props.match.params.postId
+
+    if (postId !== undefined) {
+      console.log('got post id')
+      this.props.fetchComments(postId)
     }
   }
 
@@ -35,15 +35,20 @@ class PostView extends Component {
     const postId = this.props.match.params.postId
 
     if (postId !== undefined) {
-      return posts[postId]
+      let positionInArray = posts.map(function(item) {
+        return item.id;
+      }
+      ).indexOf(postId);
+
+      return posts[positionInArray]
     }
   }
 
   renderPost() {
     let post = this.getCurPost()
+    let { history } = this.props
 
-    if (post !== undefined ) {
-
+    if (post !== undefined) {
       return (
         <div key={post.id} className="post">
           <div className="post-vote-container">
@@ -92,6 +97,11 @@ class PostView extends Component {
               <Link to={`/post/${post.id}/edit`}>
                 Edit Post
               </Link>
+              <a
+                onClick={() => this.props.deletePost(post.id, history)}
+              >
+                Delete Post
+              </a>
             </div>
           </div>
         </div>
@@ -100,27 +110,58 @@ class PostView extends Component {
   }
 
   render() {
-    // const { categories } = this.props
-    // let { post } = this.state
-
+    let { comments } = this.props
+    // let { postLoaded } = this.state
+    // console.log('comments on the post: ', comments)
     return (
-      <div className="view-post">
+      <div className="post-view">
         <Nav />
         <Helmet>
             <title>Udacilist | Post Title?</title>
         </Helmet>
         <div className="wrap">
           { this.renderPost() }
+          <AddCommentForm
+            postId={this.props.match.params.postId}
+          />
+          <div className="post-comments">
+            {comments.map((comment) => (
+              <div key={comment.id} className="comment">
+                <div className="comment-meta">
+                  {comment.author}  |  {comment.timestamp}
+                </div>
+                <div className="comment-body">
+                  {comment.body}
+                </div>
+                <div className="comment-actions">
+                  <div className="comment-vote-container">
+                    <div className="comment-voter-arrows">
+                      <div
+                        className="comment-voter up"
+                        onClick={() => this.props.upVoteComment(comment.id)}
+                      />
+                      <div
+                        className="comment-voter down"
+                        onClick={() => this.props.downVoteComment(comment.id)}
+                      />
+                    </div>
+                    {comment.voteScore} points
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     )
   }
 }
 
-function mapStateToProps ({ categories, posts }) {
+function mapStateToProps ({ categories, posts, comments }) {
   return {
     categories,
-    posts
+    posts,
+    comments
   }
 }
 
@@ -128,6 +169,10 @@ function mapDispatchToProps (dispatch) {
   return {
     upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
     downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
+    fetchComments: (id) => dispatch(fetchCommentsForPost(id)),
+    upVoteComment: (id) => dispatch(voteOnComment(id, true)),
+    downVoteComment: (id) => dispatch(voteOnComment(id, false)),
+    deletePost: (id, history) => dispatch(deletePost(id, history))
   }
 }
 

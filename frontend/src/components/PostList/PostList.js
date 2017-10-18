@@ -17,27 +17,33 @@ import Icon from '../Icon/Icon'
 class PostList extends Component {
 
   render() {
-    let { posts } = this.props;
+    let { posts, sortOrder } = this.props;
+
+    posts.sort(function(a, b) {
+      if(sortOrder === 'voteScore') {
+        return parseFloat(b.voteScore) - parseFloat(a.voteScore);
+      } else return posts
+    });
 
     return (
       <div className="post-list-container">
         <ul className='post-list'>
-          {Object.keys(posts).map( (post) =>
-            <li key={posts[post].id} className="post">
+          {posts.map( (post) =>
+            <li key={post.id} className="post">
               <div className="post-vote-container">
                 <div className="post-vote">
                   <div
                     className="post-vote-up"
-                    onClick={() => this.props.upVotePost(posts[post].id)}
+                    onClick={() => this.props.upVotePost(post.id)}
                   >
                     <Icon type="triangle-up" />
                   </div>
                   <div className="post-vote-score">
-                    {posts[post].voteScore}
+                    {post.voteScore}
                   </div>
                   <div
                     className="post-vote-down"
-                    onClick={() => this.props.downVotePost(posts[post].id)}
+                    onClick={() => this.props.downVotePost(post.id)}
                   >
                     <Icon type="triangle-down" />
                   </div>
@@ -46,21 +52,21 @@ class PostList extends Component {
               <div className="post-info">
                 <Link
                   className="post-title"
-                  to={`post/${posts[post].id}`}
+                  to={`post/${post.id}`}
                 >
-                  {posts[post].title}
+                  {post.title}
                 </Link>
                 <div className="post-meta">
                   <div className="post-submission-info">
-                    Submitted {getNumberOfDaysFromDate(posts[post].timestamp)} days ago by
+                    Submitted {getNumberOfDaysFromDate(post.timestamp)} days ago by
                     <span className="post-author">
-                      {posts[post].author}
+                      {post.author}
                     </span>
                   </div>
                   <div className="post-category">
                     Category:
                     <span className="post-category-pill">
-                      {posts[post].category}
+                      {post.category}
                     </span>
                   </div>
                 </div>
@@ -73,16 +79,17 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps ({ posts }) {
+function mapStateToProps ({ posts, sortOrder }) {
   return {
-    posts
+    posts,
+    sortOrder
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
-    downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
+    upVotePost: (id) => dispatch(voteOnPost(id, true)),
+    downVotePost: (id) => dispatch(voteOnPost(id, false)),
     sortPostList: (sortOption) => dispatch(sortPosts(sortOption)),
     getCategoryPosts: (category) => dispatch(getPostsByCategory(category))
   }

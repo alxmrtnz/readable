@@ -22,7 +22,7 @@ import PostView from './screens/PostView'
 class App extends Component {
   componentDidMount() {
     this.props.fetchCategories()
-    this.props.fetchAllPosts()
+    this.props.fetchPosts()
   }
 
   render() {
@@ -66,7 +66,7 @@ function mapStateToProps ({ categories }) {
 function mapDispatchToProps (dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
-    fetchAllPosts: () => dispatch(fetchPosts()),
+    fetchPosts: () => dispatch(fetchPosts()),
   }
 }
 

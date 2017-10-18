@@ -10,7 +10,7 @@ const defaultData = {
     body: 'Everyone says so after all.',
     author: 'Zach Kuzmic',
     category: 'react',
-    voteScore: 6,
+    voteScore: 22,
     deleted: false
   },
   "2ni6ok3ym7mf1p33lnez": {
@@ -50,7 +50,7 @@ const defaultData = {
     body: 'Everyone says so after all.',
     author: 'Zach George',
     category: 'react',
-    voteScore: 22,
+    voteScore: 6,
     deleted: false
   },
 }

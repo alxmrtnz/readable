@@ -5,14 +5,8 @@ import { Link } from 'react-router-dom'
 
 class CategoryList extends Component {
 
-  componentDidMount() {
-    console.log('category list mounted')
-  }
-
   render() {
     let { categories } = this.props;
-
-    console.log('Categories: ', categories)
 
     return (
       <div className="category-list">

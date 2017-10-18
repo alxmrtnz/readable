@@ -14,6 +14,7 @@ import Nav from '../components/Nav/Nav'
 // Actions
 import {
   createPost,
+  updatePost
 } from '../actions/posts'
 
 class AddEditPostView extends Component {
@@ -28,34 +29,46 @@ class AddEditPostView extends Component {
       category: "",
       voteScore: "0",
       deleted: false
-    }
+    },
+    updatingPost: false
   }
 
   componentDidMount() {
     let { posts } = this.props
     const postId = this.props.match.params.postId
-    let currentPost = posts[postId]
 
-    if (currentPost !== undefined) {
-      this.updatePost(currentPost)
+    if (postId !== undefined) {
+      let positionInArray = posts.map(function(item) {
+        return item.id;
+      }
+      ).indexOf(postId);
+
+      this.setExistingPost(posts[positionInArray])
     }
   }
 
   componentWillReceiveProps = (nextProps) => {
     let { posts } = nextProps
     const postId = this.props.match.params.postId
-    let currentPost = posts[postId]
 
-    if (currentPost !== undefined) {
-      this.updatePost(currentPost)
+    if (postId !== undefined) {
+      let positionInArray = posts.map(function(item) {
+        return item.id;
+      }
+      ).indexOf(postId);
+
+      this.setExistingPost(posts[positionInArray])
     }
   }
 
-  updatePost = (newPost) => {
-    this.setState(state => ({
-      ...state,
-      post: newPost
-    }))
+  setExistingPost = (post) => {
+    if (post !== undefined) {
+      this.setState(state => ({
+        ...state,
+        post: post,
+        updatingPost: true
+      }))
+    }
   }
 
   convertCategoriesObjectToArray(categories) {
@@ -97,17 +110,22 @@ class AddEditPostView extends Component {
 
     let postToSubmit = this.state.post;
 
-    postToSubmit.id = createUniqueKey()
-    postToSubmit.timestamp = Date.now()
-
-    this.props.createPost(postToSubmit)
+    if (this.state.updatingPost) {
+      this.props.updatePost(postToSubmit)
+    } else {
+      postToSubmit.id = createUniqueKey()
+      postToSubmit.timestamp = Date.now()
+      this.props.createPost(postToSubmit)
+    }
     this.props.history.goBack()
   }
 
   render() {
     const { categories } = this.props
-    let { post } = this.state
+    let { post, updatingPost } = this.state
     let selectOptions = this.convertCategoriesObjectToArray(categories)
+
+    console.log('post state: ', post)
 
     return (
       <div className="add-post">
@@ -122,26 +140,26 @@ class AddEditPostView extends Component {
                 name="title"
                 type="text"
                 placeholder="Title"
-                value={post.title}
+                // value={post.title}
                 onChange={event => this.handleInputChange({title: event.target.value})}
               />
               <input
                 name="author"
                 type="text"
                 placeholder="Author"
-                value={post.author}
+                // value={post.author}
                 onChange={event => this.handleInputChange({author: event.target.value})}
               />
               <textarea
                 name="body"
                 type="text"
                 placeholder="Body"
-                value={post.body}
+                // value={post.body}
                 onChange={event => this.handleInputChange({body: event.target.value})}
               />
               <Select
                 name="form-field-name"
-                value={post.category}
+                value={'hi'}
                 placeholder="Select a category..."
                 resetValue=""
                 options={selectOptions}
@@ -151,7 +169,7 @@ class AddEditPostView extends Component {
                 className="cta"
                 onClick={(event) => this.handleSubmit(event)}
               >
-                Add Post
+                {updatingPost ? 'Save Changes' : 'Add Post'}
               </button>
             </div>
           </form>
@@ -170,7 +188,8 @@ function mapStateToProps ({ categories, posts }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    createPost: (post) => dispatch(createPost(post))
+    createPost: (post) => dispatch(createPost(post)),
+    updatePost: (post) => dispatch(updatePost(post))
   }
 }
 

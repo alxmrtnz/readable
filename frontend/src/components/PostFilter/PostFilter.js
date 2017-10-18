@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom'
 
 // Actions
 import { sortPosts } from '../../actions/posts'
+import { updateSortOrder } from '../../actions/sort'
 
 // Components
 import Button from '../Button/Button'
@@ -24,13 +25,15 @@ class PostFilter extends Component {
     let sortBehavior = event.target.getAttribute('data-behavior')
 
     this.props.sortPostList(sortBehavior)
-
+    this.props.updateSortOrder(sortBehavior)
     this.setState(state => ({
       activeTab: targettedTab
     }))
   }
 
   render() {
+
+
     return (
       <div className="post-filter">
         <div className="wrap">
@@ -69,15 +72,17 @@ class PostFilter extends Component {
   }
 }
 
-function mapStateToProps ({ posts }) {
+function mapStateToProps ({ posts, sortOrder }) {
   return {
-    posts
+    posts,
+    sortOrder
   }
 }
 
 function mapDispatchToProps (dispatch) {
   return {
-    sortPostList: (sortOption) => dispatch(sortPosts(sortOption))
+    sortPostList: (sortOption) => dispatch(sortPosts(sortOption)),
+    updateSortOrder: (sortOption) => dispatch(updateSortOrder(sortOption))
   }
 }
 
