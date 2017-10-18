@@ -1,8 +1,6 @@
 import * as API from '../utils/api'
 
 export const GET_POSTS = 'GET_POSTS';
-// export const FETCH_POSTS = 'FETCH_POSTS';
-// export const FETCH_POST = 'FETCH_POST';
 // export const FETCH_POST_FOR_CATEGORY = 'FETCH_POST_FOR_CATEGORY';
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
@@ -29,7 +27,6 @@ export const fetchPosts = () => dispatch => {
 }
 
 // Create Post
-
 const addPost = (post) => ({
   type: ADD_POST,
   post

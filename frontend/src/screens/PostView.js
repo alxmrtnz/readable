@@ -47,6 +47,9 @@ class PostView extends Component {
   renderPost() {
     let post = this.getCurPost()
     let { history } = this.props
+    let { comments } = this.props
+
+    console.log(comments.length, ' comments here')
 
     if (post !== undefined) {
       return (
@@ -80,6 +83,7 @@ class PostView extends Component {
                 <span className="post-author">
                   {post.author}
                 </span>
+                  {comments.length} comment{comments.length > 1 ? 's' : ''}
               </div>
             </div>
             <div className="post-body">

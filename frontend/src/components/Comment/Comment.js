@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createUniqueKey } from '../../utils/utils'
 
 // Utilities
 import { getNumberOfDaysFromDate } from '../../utils/utils'
@@ -8,25 +7,33 @@ import { getNumberOfDaysFromDate } from '../../utils/utils'
 // Actions
 import {
   createComment,
-  voteOnComment
+  voteOnComment,
+  updateComment,
+  deleteComment
 } from '../../actions/comments'
 
 class Comment extends Component {
   state = {
-    // comment: {
-    //   id: '',
-    //   parentId: "",
-    //   timestamp: '',
-    //   body: '',
-    //   author: 'George Harrison',
-    //   voteScore: 1,
-    //   deleted: false,
-    //   parentDeleted: false
-    // }
+    comment: {
+      id: '',
+      parentId: "",
+      timestamp: '',
+      body: '',
+      author: 'George Harrison',
+      voteScore: 1,
+      deleted: false,
+      parentDeleted: false
+    },
+    editingComment: false
   }
 
   componentDidMount() {
+    let { commentObject } = this.props
 
+    this.setState(state => ({
+      ...state,
+      comment: commentObject
+    }))
   }
 
 
@@ -41,19 +48,40 @@ class Comment extends Component {
   }
 
   handleSubmit = (event) => {
+    event.preventDefault()
+    let updatedComment = this.state.comment
+    let timestamp = Date.now()
+    let detail = updatedComment.body
 
+    this.props.updateComment(updatedComment.id, timestamp, detail)
+
+    this.setState(state => ({
+      ...state,
+      comment: updatedComment,
+      editingComment: false
+    }))
   }
 
-  handleEditPost = (event) => {
-    console.log(' edit clicked')
+  handleDelete = (event) => {
+    event.preventDefault()
   }
 
-  handleDeletePost = (event) => {
-    console.log(' delete clicked')
+  handleEditComment = (event) => {
+    this.setState(state => ({
+      ...state,
+      editingComment: true
+    }))
+  }
+
+  handleDeleteComment = (event) => {
+    event.preventDefault()
+
+    this.props.deleteComment(this.state.comment.id)
   }
 
   render() {
     let { commentObject } = this.props
+    let { comment } = this.state
 
     return (
       <div className="comment">
@@ -61,7 +89,27 @@ class Comment extends Component {
           {commentObject.author}  |  {getNumberOfDaysFromDate(commentObject.timestamp)} days ago
         </div>
         <div className="comment-body">
-          {commentObject.body}
+          <span className={`${this.state.editingComment ? 'hide' : ''}`}>
+            {commentObject.body}
+          </span>
+
+          <form
+            onSubmit={(event) => this.handleSubmit(event)}
+            className={`edit-comment-form ${this.state.editingComment ? 'active' : ''}`}>
+            <textarea
+              name="comment"
+              type="text"
+              placeholder="Add a Comment"
+              value={comment.body}
+              onChange={event => this.handleInputChange({body: event.target.value})}
+            />
+            <button
+              className="cta"
+              onClick={(event) => this.handleSubmit(event)}
+            >
+              Save Changes
+            </button>
+          </form>
         </div>
         <div className="comment-actions">
           <div className="comment-vote-container">
@@ -77,14 +125,16 @@ class Comment extends Component {
             </div>
             {commentObject.voteScore} points
           </div>
-          <div className="comment-edit-delete">
+          <div
+            className={`comment-edit-delete ${this.state.editingComment ? 'hide' : ''}`}
+          >
             <a
-              onClick={(event) => this.handleEditPost(event)}
+              onClick={(event) => this.handleEditComment(event)}
             >
               Edit
             </a>
             <a
-              onClick={(event) => this.handleDeletePost(event)}
+              onClick={(event) => this.handleDeleteComment(event)}
             >
               Delete
             </a>
@@ -105,7 +155,9 @@ function mapDispatchToProps (dispatch) {
   return {
     upVoteComment: (id) => dispatch(voteOnComment(id, true)),
     downVoteComment: (id) => dispatch(voteOnComment(id, false)),
-    createComment: (comment) => dispatch(createComment(comment))
+    createComment: (comment) => dispatch(createComment(comment)),
+    updateComment: (commentId, timestamp, detail) => dispatch(updateComment(commentId, timestamp, detail)),
+    deleteComment: (id) => dispatch(deleteComment(id))
   }
 }
 

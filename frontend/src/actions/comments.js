@@ -1,13 +1,10 @@
 import * as API from '../utils/api'
 
-// export const FETCH_COMMENTS_FOR_POST = 'FETCH_COMMENTS_FOR_POST';
 export const GET_POST_COMMENTS = 'GET_POST_COMMENTS';
 export const ADD_COMMENT = 'ADD_COMMENT';
 export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
-// export const UP_VOTE_COMMENT = 'UP_VOTE_COMMENT';
-// export const DOWN_VOTE_COMMENT = 'DOWN_VOTE_COMMENT';
-// export const UPDATE_COMMENT = 'UPDATE_COMMENT';
-// export const DELETE_COMMENT = 'DELETE_COMMENT';
+export const UPDATE_COMMENT = 'UPDATE_COMMENT';
+export const DELETE_COMMENT = 'DELETE_COMMENT';
 
 
   export function addComment(comment) {
@@ -39,6 +36,7 @@ export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
     )
   }
 
+  // Comment Voting
   const receiveCommentVote = (comment) => ({
     type: VOTE_ON_COMMENT,
     comment
@@ -48,4 +46,33 @@ export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
     API.voteComment(id, isUp).then((comment) => {
       dispatch(receiveCommentVote(comment))
     })
+  }
+
+  // Comment Updating
+  const receiveUpdatedComment = (comment) => ({
+    type: UPDATE_COMMENT,
+    comment
+  });
+
+  export const updateComment = (commentId, timestamp, detail) => dispatch => {
+    API.updateComment(commentId, timestamp, detail).then((comment) => {
+      dispatch(receiveUpdatedComment(comment))
+    })
+  }
+
+  // Delete Comment
+  const deleteCommentSuccess = (commentId) => ({
+    type: DELETE_COMMENT,
+    commentId
+  })
+
+
+  export function deleteComment(commentId) {
+    return dispatch => {
+      API.deleteComment(commentId).then( (data) =>{
+        if (data.status === 200) {
+          dispatch(deleteCommentSuccess(commentId))
+        }
+      })
+    }
   }

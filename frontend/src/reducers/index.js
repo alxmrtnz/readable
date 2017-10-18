@@ -13,7 +13,9 @@ import { GET_ALL_CATEGORIES } from '../actions/categories'
 import {
   GET_POST_COMMENTS,
   VOTE_ON_COMMENT,
-  ADD_COMMENT
+  ADD_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT
 } from '../actions/comments'
 
 import { UPDATE_SORT_ORDER } from '../actions/sort'
@@ -76,8 +78,9 @@ export function posts(state = [], action){
 }
 
 export function comments(state = [], action){
-  const { comments, comment } = action
+  const { comments, comment, commentId } = action
   let newState = ''
+  let commentPosition = ''
 
   switch (action.type) {
     case GET_POST_COMMENTS:
@@ -87,7 +90,7 @@ export function comments(state = [], action){
       });
       return newState
     case VOTE_ON_COMMENT:
-      let commentPosition = state.map(function(item) {
+      commentPosition = state.map(function(item) {
         return item.id;
       }
       ).indexOf(comment.id);
@@ -106,6 +109,22 @@ export function comments(state = [], action){
       newState = [...state]
       newState.push(comment)
       return newState
+    case UPDATE_COMMENT:
+      commentPosition = state.map(function(item) {
+        return item.id;
+      }
+      ).indexOf(comment.id);
+
+      newState = [
+        ...state.slice( 0, commentPosition ),
+        comment,
+        ...state.slice( commentPosition + 1, state.length)
+      ]
+      return newState
+    case DELETE_COMMENT:
+      return state.filter(function(comment) {
+        return comment.id !== commentId;
+      });
     default:
       return state
   }

@@ -7,60 +7,9 @@
     }
 
     .post-comments {
-      .comment {
-        margin-bottom: $space;
-
-        .comment-meta {
-          color: #7E8496;
-          font-size: 0.875em;
-          margin-bottom: $half-space;
-
-          span {
-            margin-right: 0.5em;
-          }
-        }
-
-        .comment-body {
-          margin-bottom: $half-space;
-          white-space: pre-wrap;
-        }
-
-        .comment-actions {
-          font-size: 0.875em;
-
-          .comment-vote-container {
-            @include better-box(flex);
-            align-items: center;
-            color: #7E8496;
-
-            .comment-voter-arrows {
-              margin-right: 1em;
-              cursor: pointer;
-
-              .comment-voter {
-                border-radius: 4px;
-
-                &.up {
-                  width: 0;
-                  height: 0;
-                  border-left: 8px solid transparent;
-                  border-right: 8px solid transparent;
-                  border-bottom: 8px solid #7E8496;
-                  margin-bottom: 0.5em;
-                }
-
-                &.down {
-                  width: 0;
-                  height: 0;
-                  border-left: 8px solid transparent;
-                  border-right: 8px solid transparent;
-                  border-top: 8px solid #7E8496;
-                }
-              }
-            }
-          }
-        }
-      }
+      margin-top: $half-space;
+      padding-top: $space;
+      border-top: 1px solid $border-color;
     } // End .post-comments
   } // End .wrap
 } // End .post-view

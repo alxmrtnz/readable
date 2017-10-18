@@ -64,7 +64,7 @@
 
       .post-author {
         font-weight: bold;
-        margin: 0 0.2em;
+        margin: 0 1em 0 0.2em;
       }
     }
 
@@ -78,6 +78,23 @@
       }
     }
   } // End .post-meta
+
+  .post-actions {
+    display: flex;
+    margin-top: $space;
+    font-size: 0.875em;
+
+    a {
+      color: #7E8496;
+      cursor: pointer;
+      display: block;
+      margin-right: $micro-space;
+
+      &:last-of-type {
+        color: $brand;
+      }
+    }
+  } // End .post-actions
 
   .post-body {
     margin-bottom: $space;
