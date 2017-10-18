@@ -143,8 +143,8 @@ function mapStateToProps ({ categories, posts, comments }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
-    downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
+    upVotePost: (id) => dispatch(voteOnPost(id, true)),
+    downVotePost: (id) => dispatch(voteOnPost(id, false)),
     fetchComments: (id) => dispatch(fetchCommentsForPost(id)),
     deletePost: (id, history) => dispatch(deletePost(id, history))
   }
