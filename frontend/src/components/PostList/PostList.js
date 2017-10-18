@@ -9,6 +9,7 @@ import {
   sortPosts,
   getPostsByCategory
 } from '../../actions/posts'
+import { fetchNumberOfCommentsForPost } from '../../actions/comments'
 
 
 // Components
@@ -16,8 +17,15 @@ import Icon from '../Icon/Icon'
 
 class PostList extends Component {
 
+  fetchNumberOfCommentsForPost = (postId) => {
+    let commentNumber = this.props.fetchNumberOfCommentsForPost(postId)
+    console.log('# ', commentNumber)
+  }
+
   render() {
-    let { posts, sortOrder } = this.props;
+    let { posts, comments, sortOrder } = this.props;
+
+    console.log('all comments? ', comments)
 
     posts.sort(function(a, b) {
       if(sortOrder === 'voteScore') {
@@ -62,6 +70,7 @@ class PostList extends Component {
                     <span className="post-author">
                       {post.author}
                     </span>
+                    {this.fetchNumberOfCommentsForPost(post.id)}
                   </div>
                   <div className="post-category">
                     Category:
@@ -79,9 +88,10 @@ class PostList extends Component {
   }
 }
 
-function mapStateToProps ({ posts, sortOrder }) {
+function mapStateToProps ({ posts, comments, sortOrder }) {
   return {
     posts,
+    comments,
     sortOrder
   }
 }
@@ -91,7 +101,8 @@ function mapDispatchToProps (dispatch) {
     upVotePost: (id) => dispatch(voteOnPost(id, true)),
     downVotePost: (id) => dispatch(voteOnPost(id, false)),
     sortPostList: (sortOption) => dispatch(sortPosts(sortOption)),
-    getCategoryPosts: (category) => dispatch(getPostsByCategory(category))
+    getCategoryPosts: (category) => dispatch(getPostsByCategory(category)),
+    fetchNumberOfCommentsForPost: (id) => dispatch(fetchNumberOfCommentsForPost(id))
   }
 }
 

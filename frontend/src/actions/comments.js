@@ -36,6 +36,13 @@ export const DELETE_COMMENT = 'DELETE_COMMENT';
     )
   }
 
+  export const fetchNumberOfCommentsForPost = (id) => dispatch => {
+    API.fetchComments(id).then(comments => {
+        return 'bob'
+      }
+    )
+  }
+
   // Comment Voting
   const receiveCommentVote = (comment) => ({
     type: VOTE_ON_COMMENT,
