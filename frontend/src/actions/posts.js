@@ -1,13 +1,11 @@
 import * as API from '../utils/api'
 
 export const GET_POSTS = 'GET_POSTS';
-// export const FETCH_POST_FOR_CATEGORY = 'FETCH_POST_FOR_CATEGORY';
 export const ADD_POST = 'ADD_POST';
 export const UPDATE_POST = 'UPDATE_POST';
 export const VOTE_ON_POST = 'VOTE_ON_POST';
 export const SORT_POSTS = 'SORT_POSTS';
 export const DELETE_POST = 'DELETE_POST';
-
 
 // Post Fetching
 const receivePosts = posts => ({
@@ -65,9 +63,7 @@ const recieveVoteOnPost = (post) => ({
 
 // Post Sorting
 export const sortPosts = (sortOption) => dispatch => {
-
     API.fetchAllPosts().then((posts) => {
-
       posts.sort(function(a, b) {
         if(sortOption === 'voteScore') {
           return parseFloat(b.voteScore) - parseFloat(a.voteScore);
@@ -80,18 +76,11 @@ export const sortPosts = (sortOption) => dispatch => {
   )
 }
 
-export const getPostsByCategory = (category) => dispatch =>{
-  API.fetchCategoryPosts(category).then(posts => {
-    console.log('posts of category "', category, '": ', posts)
-  })
-}
-
 // Delete Post
 const deletePostSuccess = (postId) => ({
   type: DELETE_POST,
   postId
 })
-
 
 export function deletePost(postId, history) {
   return dispatch => {

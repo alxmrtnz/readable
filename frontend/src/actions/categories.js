@@ -7,29 +7,8 @@ const receiveAllCategories = categories => ({
   categories
 });
 
-export const fetchCategories = () => dispatch => {
-  API
-    .fetchAllCategories()
-    .then(categories =>
-      dispatch(receiveAllCategories(categories))
-    )
+export const fetchCategories = () => (dispatch) => {
+  API.fetchAllCategories().then(categories =>
+    dispatch(receiveAllCategories(categories))
+  )
 }
-
-
-// The same as:
-// function receiveAllCategories(categories) {
-//   return {
-//     type: GET_ALL_CATEGORIES,
-//     categories
-//   }
-// };
-
-// export function fetchCategories() {
-//   return dispatch => {
-//     return API
-//     .fetchAllCategories()
-//     .then(categories =>
-//       dispatch(receiveAllCategories(categories))
-//     )
-//   }
-// }

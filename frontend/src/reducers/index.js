@@ -135,7 +135,6 @@ export function comments(state = [], action){
   }
 }
 
-
 export function sortOrder(state = 'voteScore', action){
   let { option } = action
 
@@ -146,7 +145,6 @@ export function sortOrder(state = 'voteScore', action){
       return state
   }
 }
-
 
 export default combineReducers({
   categories,

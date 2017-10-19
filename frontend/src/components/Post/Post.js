@@ -15,7 +15,7 @@ import Icon from '../Icon/Icon'
 class Post extends Component {
 
   state = {
-    numberOfComments: '2'
+    numberOfComments: '0'
   }
 
   componentDidMount() {
@@ -28,9 +28,15 @@ class Post extends Component {
         numberOfComments: commentNumber
       }))
     }
-
   }
 
+  /**
+  * @description Function that filters the comments from redux store
+  * for the current post and then returns the length of the array of
+  * comments.
+  * @returns {integer} filteredComments.length – the number of comments
+  * for the current post
+  */
   renderCommentNumber() {
     let { postObject, comments } = this.props
 
@@ -42,6 +48,12 @@ class Post extends Component {
     }
   }
 
+  /**
+  * @description Function that renders the title of the post. If the
+  * post is being rendered in PostView.js, it will return a title without
+  * a link, while when rendered outside of the post view, it links the title
+  * @returns {Object} post title
+  */
   renderTitle(postObject) {
     let { postView } = this.props
 
@@ -63,7 +75,6 @@ class Post extends Component {
         </Link>
       )
     }
-
   }
 
   render() {

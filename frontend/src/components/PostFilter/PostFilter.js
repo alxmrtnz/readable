@@ -14,12 +14,24 @@ class PostFilter extends Component {
     activeTab: "tab-1"
   }
 
+  /**
+  * @description Function that returns an active class for a tab if it
+  * is active in the PostFilter's state
+  * @params {String} tab – the data-behavior of the selected tab
+  */
   renderActiveClass(tab) {
     if (tab === this.state.activeTab) {
       return 'active'
     }
   }
 
+  /**
+  * @description Function that handles the click event on the post filter
+  * tabs. It then calls sort behavior that changes the order of posts
+  * in the redux store (and how they're rendered in PostList.js)
+  * @params {Object} event - click event on a tab, used to determine
+  * data-behavior from the clicked tab
+  */
   handleTabClick = (event) => {
     let targettedTab = event.target.getAttribute('data-structure')
     let sortBehavior = event.target.getAttribute('data-behavior')
@@ -32,8 +44,6 @@ class PostFilter extends Component {
   }
 
   render() {
-
-
     return (
       <div className="post-filter">
         <div className="wrap">
@@ -72,10 +82,9 @@ class PostFilter extends Component {
   }
 }
 
-function mapStateToProps ({ posts, sortOrder }) {
+function mapStateToProps ({ posts }) {
   return {
-    posts,
-    sortOrder
+    posts
   }
 }
 

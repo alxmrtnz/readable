@@ -4,10 +4,8 @@ import { connect } from 'react-redux'
 // Actions
 import {
   voteOnPost,
-  sortPosts,
-  getPostsByCategory
+  sortPosts
 } from '../../actions/posts'
-
 
 // Components
 import Post from '../Post/Post'
@@ -17,6 +15,7 @@ class PostList extends Component {
   render() {
     let { posts, sortOrder, category } = this.props;
 
+    // Initially sort the posts to voteScore
     posts.sort(function(a, b) {
       if(sortOrder === 'voteScore') {
         return parseFloat(b.voteScore) - parseFloat(a.voteScore);
@@ -58,8 +57,7 @@ function mapDispatchToProps (dispatch) {
   return {
     upVotePost: (id) => dispatch(voteOnPost(id, true)),
     downVotePost: (id) => dispatch(voteOnPost(id, false)),
-    sortPostList: (sortOption) => dispatch(sortPosts(sortOption)),
-    getCategoryPosts: (category) => dispatch(getPostsByCategory(category))
+    sortPostList: (sortOption) => dispatch(sortPosts(sortOption))
   }
 }
 
