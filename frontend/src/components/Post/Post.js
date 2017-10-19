@@ -32,7 +32,19 @@ class Post extends Component {
   }
 
   renderCommentNumber() {
-    return this.props.comments.length
+    let { postObject, comments } = this.props
+
+    if (postObject !== undefined) {
+      var reducedComments = comments.reduce(function(filtered, comment) {
+        if (comment.parentId === postObject.id) {
+           filtered.push(comment);
+        }
+        return filtered;
+      }, []);
+
+      console.log('number of comments for the post: ', reducedComments.length)
+      return reducedComments.length
+    }
   }
 
   renderTitle(postObject) {
@@ -97,8 +109,8 @@ class Post extends Component {
                 <span className="post-author">
                   {postObject.author}
                 </span>
-                <span className={postView ? '' : 'hide'}>
-                  {comments.length} comment{comments.length === 1 ? '' : 's'}
+                <span>
+                  { this.renderCommentNumber() } comment{comments.length === 1 ? '' : 's'}
                 </span>
               </div>
             <div className="post-category">

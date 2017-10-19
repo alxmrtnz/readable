@@ -15,7 +15,8 @@ import Post from '../components/Post/Post'
 class PostView extends Component {
 
   state = {
-    postLoaded: false
+    postLoaded: false,
+    postComments: []
   }
 
   componentDidMount() {
@@ -23,6 +24,7 @@ class PostView extends Component {
 
     if (postId !== undefined) {
       this.props.fetchComments(postId)
+
     }
   }
 
@@ -56,8 +58,28 @@ class PostView extends Component {
     }
   }
 
+  getCommentsForThisPost() {
+    let post = this.getCurPost()
+    let { comments } = this.props
+
+    if (post !== undefined) {
+      var reducedComments = comments.reduce(function(filtered, comment) {
+        if (comment.parentId === post.id) {
+           filtered.push(comment);
+        }
+        return filtered;
+      }, []);
+
+      return reducedComments
+    }
+  }
+
   render() {
     let { comments } = this.props
+    let postComments = this.getCommentsForThisPost()
+
+    console.log('post comments: ', postComments)
+
     return (
       <div className="post-view">
         <Nav />
@@ -70,7 +92,7 @@ class PostView extends Component {
             postId={this.props.match.params.postId}
           />
           <div className="post-comments">
-            {comments.map((comment) => (
+            {postComments && postComments.map((comment) => (
               <Comment key={comment.id} commentObject={comment}/>
             ))}
           </div>

@@ -84,10 +84,28 @@ export function comments(state = [], action){
 
   switch (action.type) {
     case GET_POST_COMMENTS:
-      newState = comments
-      newState.sort(function(a, b) {
-          return parseFloat(b.voteScore) - parseFloat(a.voteScore);
+      let previousComments = [...state]
+
+      let newComments = comments.filter(function(comment, index) {
+        if (previousComments[index] !== undefined) {
+          if (comment.id !== previousComments[index].id) {
+            return comment
+          }
+        } else {
+          return comment
+        }
       });
+
+      // newComments.forEach(function(comment) {
+      //   console.log('comment: ', comment)
+      //   previousComments.push(comment)
+      //   // return item
+      // })
+
+      newState = previousComments.concat(newComments)
+
+      // newState = previousComments.push.apply(newComments)
+      console.log('new state: ', newState)
       return newState
     case VOTE_ON_COMMENT:
       commentPosition = state.map(function(item) {
