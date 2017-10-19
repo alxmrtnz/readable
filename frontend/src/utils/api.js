@@ -1,3 +1,9 @@
+// NOTE FOR REVIEWER: This api file is based off of an api file from
+// https://github.com/jayzhou215/readable/blob/master/src/utils/Api.js
+//
+// I'm very new to apis and his setup was super helpful in
+// figuring out how things work
+
 const api = 'http://localhost:3001'
 
 const headers = {
