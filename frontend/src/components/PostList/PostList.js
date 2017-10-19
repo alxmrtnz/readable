@@ -22,7 +22,6 @@ class PostList extends Component {
 
   render() {
     let { posts, sortOrder, category } = this.props;
-    console.log('CURRENT CATEGORY: ', category)
 
     posts.sort(function(a, b) {
       if(sortOrder === 'voteScore') {
@@ -33,6 +32,9 @@ class PostList extends Component {
     return (
       <div className="post-list-container">
         <div className='post-list'>
+          {category &&
+            <h2 className="category-heading"><span>Viewing posts tagged as: </span>{category}</h2>
+          }
           {
             posts.filter((post) => {
               if (category) {

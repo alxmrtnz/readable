@@ -1,4 +1,15 @@
 .post-list-container {
+  .category-heading {
+    font-size: 1.2em;
+    margin-bottom: 0;
+
+    span {
+      color: #9a9a9a;
+      font-family: $font;
+      font-weight: 400;
+    }
+  }
+
   .post-list-header {
     @include full-box(flex);
     align-items: center;

@@ -12,6 +12,11 @@ class CategoryList extends Component {
       <div className="category-list">
         <p>Categories</p>
         <ul className='category-list'>
+          <li key='all' >
+            <Link to="/">
+              All Categories
+            </Link>
+          </li>
           {Object.keys(categories).map((name) => (
             <li key={name} >
               <Link to={`/${categories[name]}`} >

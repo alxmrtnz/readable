@@ -15,7 +15,6 @@ import { fetchPosts } from './actions/posts'
 
 // Screens
 import Main from './screens/Main'
-import CategoryView from './screens/CategoryView'
 import AddEditPostView from './screens/AddEditPostView'
 import PostView from './screens/PostView'
 
