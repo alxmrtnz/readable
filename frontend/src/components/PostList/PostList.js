@@ -21,7 +21,8 @@ class PostList extends Component {
   }
 
   render() {
-    let { posts, sortOrder } = this.props;
+    let { posts, sortOrder, category } = this.props;
+    console.log('CURRENT CATEGORY: ', category)
 
     posts.sort(function(a, b) {
       if(sortOrder === 'voteScore') {
@@ -32,9 +33,17 @@ class PostList extends Component {
     return (
       <div className="post-list-container">
         <div className='post-list'>
-          {posts.map( (post) =>
-            <Post key={post.id} postObject={post} />
-          )}
+          {
+            posts.filter((post) => {
+              if (category) {
+                return post.category === category
+              }
+              return post
+            }).map( (post) =>
+              <Post key={post.id} postObject={post} />
+            )
+          }
+
         </div>
       </div>
     );

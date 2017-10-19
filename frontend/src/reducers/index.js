@@ -94,18 +94,10 @@ export function comments(state = [], action){
         } else {
           return comment
         }
+        return undefined
       });
 
-      // newComments.forEach(function(comment) {
-      //   console.log('comment: ', comment)
-      //   previousComments.push(comment)
-      //   // return item
-      // })
-
       newState = previousComments.concat(newComments)
-
-      // newState = previousComments.push.apply(newComments)
-      console.log('new state: ', newState)
       return newState
     case VOTE_ON_COMMENT:
       commentPosition = state.map(function(item) {

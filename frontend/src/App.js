@@ -14,7 +14,7 @@ import { fetchCategories } from './actions/categories'
 import { fetchPosts } from './actions/posts'
 
 // Screens
-import Landing from './screens/Landing'
+import Main from './screens/Main'
 import CategoryView from './screens/CategoryView'
 import AddEditPostView from './screens/AddEditPostView'
 import PostView from './screens/PostView'
@@ -32,11 +32,11 @@ class App extends Component {
         <SVGSprite />
         <BrowserRouter>
           <Switch>
-            <Route exact path="/" render={() => (
-              <Landing />
+            <Route exact path="/" render={(props) => (
+              <Main {...props}/>
             )}/>
             <Route exact path={'/:category'} render={(props) => (
-              <CategoryView {...props} />
+              <Main {...props} />
             )} />
             <Route path="/post/add" render={(props) => (
               <AddEditPostView {...props} />

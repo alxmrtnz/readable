@@ -6,8 +6,13 @@ import CategoryList from '../components/CategoryList/CategoryList'
 import Nav from '../components/Nav/Nav'
 import PostFilter from '../components/PostFilter/PostFilter'
 
-class Landing extends Component {
+class Main extends Component {
   render() {
+    let currentCategory = null
+    if (this.props.match.params.category) {
+      currentCategory = this.props.match.params.category
+    }
+
     return (
       <div className="landing">
         <Helmet>
@@ -18,7 +23,7 @@ class Landing extends Component {
         <div className="wrap">
           <div className="landing-canvas">
             <div className="landing-canvas-content">
-              <PostList />
+              <PostList category={currentCategory}/>
             </div>
             <div className="landing-canvas-sidebar">
               <CategoryList />
@@ -30,4 +35,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+export default Main;

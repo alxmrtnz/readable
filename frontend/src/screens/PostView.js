@@ -75,10 +75,7 @@ class PostView extends Component {
   }
 
   render() {
-    let { comments } = this.props
     let postComments = this.getCommentsForThisPost()
-
-    console.log('post comments: ', postComments)
 
     return (
       <div className="post-view">

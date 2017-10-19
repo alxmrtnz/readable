@@ -41,8 +41,6 @@ class Post extends Component {
         }
         return filtered;
       }, []);
-
-      console.log('number of comments for the post: ', reducedComments.length)
       return reducedComments.length
     }
   }
@@ -72,7 +70,8 @@ class Post extends Component {
   }
 
   render() {
-    let { comments, postObject, history, postView } = this.props
+    let { postObject, history, postView } = this.props
+    let commentNumber = this.renderCommentNumber()
 
     return (
       <div className="post">
@@ -110,7 +109,7 @@ class Post extends Component {
                   {postObject.author}
                 </span>
                 <span>
-                  { this.renderCommentNumber() } comment{comments.length === 1 ? '' : 's'}
+                  { commentNumber } comment{commentNumber === 1 ? '' : 's'}
                 </span>
               </div>
             <div className="post-category">
