@@ -10,7 +10,7 @@ const defaultData = {
     body: 'Everyone says so after all.',
     author: 'Zach Kuzmic',
     category: 'react',
-    voteScore: 22,
+    voteScore: 5,
     deleted: false
   },
   "2ni6ok3ym7mf1p33lnez": {
@@ -20,7 +20,7 @@ const defaultData = {
     body: 'Just kidding. It takes more than 10 minutes to learn technology.',
     author: 'Elvis Presley',
     category: 'redux',
-    voteScore: -5,
+    voteScore: 15,
     deleted: false
   },
   "3ni6ok3ym7mf1p33lnex": {

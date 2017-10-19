@@ -4,5 +4,11 @@
 
   .nav-logo {
     color: $background;
+    margin: 0 auto;
+    text-align: center;
+
+    a {
+      color: $background;
+    }
   } // End .nav-logo
 } // End .nav

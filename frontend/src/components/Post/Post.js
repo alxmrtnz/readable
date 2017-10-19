@@ -35,13 +35,10 @@ class Post extends Component {
     let { postObject, comments } = this.props
 
     if (postObject !== undefined) {
-      var reducedComments = comments.reduce(function(filtered, comment) {
-        if (comment.parentId === postObject.id) {
-           filtered.push(comment);
-        }
-        return filtered;
-      }, []);
-      return reducedComments.length
+      let filteredComments = comments.filter(function(comment) {
+        return comment.parentId === postObject.id;
+      });
+      return filteredComments.length
     }
   }
 

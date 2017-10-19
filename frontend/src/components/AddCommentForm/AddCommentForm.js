@@ -51,6 +51,11 @@ class AddCommentForm extends Component {
     }))
   }
 
+  /**
+  * @description Receives value from inputs and sets the state
+  * of the view in order to manage the comment form
+  * @param {Object} newPartialInput - event.target.value of an input
+  */
   handleInputChange(newPartialInput) {
     this.setState(state => ({
       ...state,
@@ -61,6 +66,11 @@ class AddCommentForm extends Component {
     }))
   }
 
+  /**
+  * @description Handles the form submission of the comment form. After
+  * submission, the function calls this.resetState to clear the form
+  * @param {event} event - the form submit event
+  */
   handleSubmit = (event) => {
     event.preventDefault()
     let commentToSubmit = this.state.comment
@@ -105,12 +115,6 @@ function mapStateToProps ({ comments }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    // upVotePost: (id) => dispatch(voteOnPost(id, 'upVote')),
-    // downVotePost: (id) => dispatch(voteOnPost(id, 'downVote')),
-    // fetchComments: (id) => dispatch(fetchCommentsForPost(id)),
-    // upVoteComment: (id) => dispatch(voteOnComment(id, true)),
-    // downVoteComment: (id) => dispatch(voteOnComment(id, false)),
-    // deletePost: (id, history) => dispatch(deletePost(id, history))
     createComment: (comment) => dispatch(createComment(comment))
   }
 }

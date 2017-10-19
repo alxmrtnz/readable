@@ -24,11 +24,15 @@ class PostView extends Component {
 
     if (postId !== undefined) {
       this.props.fetchComments(postId)
-
     }
   }
 
-  getCurPost() {
+  /**
+  * @description Gets the current post from the Redux store based on
+  * the postId provided in this.props.match.params.postId
+  * @returns {Object} post - a single post object from the store
+  */
+  getCurrentPost() {
     let { posts } = this.props
     const postId = this.props.match.params.postId
 
@@ -42,8 +46,18 @@ class PostView extends Component {
     }
   }
 
+  /**
+  * @description Function to render a Post component. This function first
+  * calls this.getCurrentPost() to get a post object and waits to return
+  * a `Post` component until the post exists (as it is dependent on matching
+  * url params before being able to return a post)
+  * @param {Object} post - object for post currently being viewed, as stored in
+  * redux store
+  * @param {Object} history - history object prop from BrowserRouter
+  * @returns {Component} Post - a post component with props being passed into it
+  */
   renderPost() {
-    let post = this.getCurPost()
+    let post = this.getCurrentPost()
     let { history } = this.props
 
     if (post !== undefined) {
@@ -58,24 +72,31 @@ class PostView extends Component {
     }
   }
 
-  getCommentsForThisPost() {
-    let post = this.getCurPost()
+  /**
+  * @description Function that accesses all comments in the redux store, then reduces
+  * those comments to an array of only the comments for the current post being viewed.
+  * This function then returns those comments as a new array
+  * @param {Object} post - object for post currently being viewed, as stored in
+  * redux store
+  * @param {Array} comments - array of comments as stored in redux store
+  * @returns {Array} reducedComments - a filtered array of comments for the current post
+  */
+  getCommentsForPost() {
+    let post = this.getCurrentPost()
     let { comments } = this.props
 
     if (post !== undefined) {
-      var reducedComments = comments.reduce(function(filtered, comment) {
-        if (comment.parentId === post.id) {
-           filtered.push(comment);
-        }
-        return filtered;
-      }, []);
 
-      return reducedComments
+      let filteredComments = comments.filter(function(comment) {
+        return comment.parentId === post.id;
+      });
+
+      return filteredComments
     }
   }
 
   render() {
-    let postComments = this.getCommentsForThisPost()
+    let postComments = this.getCommentsForPost()
 
     return (
       <div className="post-view">
@@ -99,11 +120,11 @@ class PostView extends Component {
   }
 }
 
-function mapStateToProps ({ categories, posts, comments }) {
+function mapStateToProps ({ categories, comments, posts }) {
   return {
     categories,
+    comments,
     posts,
-    comments
   }
 }
 

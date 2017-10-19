@@ -86,15 +86,10 @@ export function comments(state = [], action){
     case GET_POST_COMMENTS:
       let previousComments = [...state]
 
-      let newComments = comments.filter(function(comment, index) {
-        if (previousComments[index] !== undefined) {
-          if (comment.id !== previousComments[index].id) {
-            return comment
-          }
-        } else {
-          return comment
-        }
-        return undefined
+      let previousCommentIds = previousComments.map((comment) => comment.id)
+
+      let newComments = comments.filter(function(comment) {
+        return !previousCommentIds.includes(comment.id)
       });
 
       newState = previousComments.concat(newComments)

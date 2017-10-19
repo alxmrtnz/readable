@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Helmet } from "react-helmet";
 
-import PostList from '../components/PostList/PostList'
 import CategoryList from '../components/CategoryList/CategoryList'
 import Nav from '../components/Nav/Nav'
 import PostFilter from '../components/PostFilter/PostFilter'
+import PostList from '../components/PostList/PostList'
 
 class Main extends Component {
   render() {

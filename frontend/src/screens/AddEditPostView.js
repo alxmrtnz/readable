@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
-import { Helmet } from "react-helmet"
 import Select from 'react-select';
+import { connect } from 'react-redux'
 import { createUniqueKey } from '../utils/utils'
+import { Helmet } from "react-helmet"
 
 // React Select Default Styles
 import 'react-select/dist/react-select.css';
@@ -34,20 +34,22 @@ class AddEditPostView extends Component {
 
   componentDidMount() {
     let { posts } = this.props
-    const postId = this.props.match.params.postId
-
-    if (postId !== undefined) {
-      let positionInArray = posts.map(function(item) {
-        return item.id;
-      }
-      ).indexOf(postId);
-
-      this.setExistingPost(posts[positionInArray])
-    }
+    this.setExisitingPost(posts)
   }
 
   componentWillReceiveProps = (nextProps) => {
     let { posts } = nextProps
+    this.setExisitingPost(posts)
+  }
+
+  /**
+  * @description Function to set the view's 'post' state.
+  * This function is called when the AddEditPostView mounts or
+  * receives props because postId is determined from
+  * this.props.match.params.postId and may not available on initial mount
+  * @param {Array} posts - The posts as a prop via Redux state
+  */
+  setExisitingPost = (posts) => {
     const postId = this.props.match.params.postId
 
     if (postId !== undefined) {
@@ -56,20 +58,23 @@ class AddEditPostView extends Component {
       }
       ).indexOf(postId);
 
-      this.setExistingPost(posts[positionInArray])
+      if (posts[positionInArray] !== undefined) {
+        this.setState(state => ({
+          ...state,
+          post: posts[positionInArray],
+          updatingPost: true
+        }))
+      }
     }
   }
 
-  setExistingPost = (post) => {
-    if (post !== undefined) {
-      this.setState(state => ({
-        ...state,
-        post: post,
-        updatingPost: true
-      }))
-    }
-  }
-
+  /**
+  * @description Function to convert an object to an array. Categories
+  * are stored as an object, however the `Select` component requires
+  * options as an array.
+  * @param {Object} categories - The posts as a prop via Redux state
+  * @returns {Array} the initial categories object now as an array
+  */
   convertCategoriesObjectToArray(categories) {
     var newArray = [];
 
@@ -94,6 +99,11 @@ class AddEditPostView extends Component {
     return newArray;
   }
 
+  /**
+  * @description Receives value from inputs and sets the state of the view
+  * in order to manage the edit form
+  * @param {Object} newPartialInput - event.target.value of an input
+  */
   handleInputChange(newPartialInput) {
     this.setState(state => ({
       ...state,
@@ -104,6 +114,13 @@ class AddEditPostView extends Component {
     }))
   }
 
+  /**
+  * @description Handles the form submission of the Add/Edit view. The function
+  * checks whether the view is "editing" an existing post or "creating/adding"
+  * a new post (based on this.state.updatingPost) and then either calls
+  * prop functions to update or create a post
+  * @param {event} event - the form submit event
+  */
   handleSubmit = (event) => {
     event.preventDefault()
 

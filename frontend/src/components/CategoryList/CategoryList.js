@@ -36,14 +36,6 @@ function mapStateToProps ({ categories }) {
   }
 }
 
-function mapDispatchToProps (dispatch) {
-  return {
-    // fetchCategories: () => dispatch(fetchCategories()),
-    // remove: (data) => dispatch(removeFromCalendar(data))
-  }
-}
-
 export default connect(
-  mapStateToProps,
-  mapDispatchToProps
+  mapStateToProps
 )(CategoryList)

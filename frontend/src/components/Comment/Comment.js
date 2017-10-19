@@ -36,7 +36,11 @@ class Comment extends Component {
     }))
   }
 
-
+  /**
+  * @description Receives value from textarea for comment while editing
+  * and updates the comment body state
+  * @param {Object} newPartialInput - event.target.value of an input
+  */
   handleInputChange(newPartialInput) {
     this.setState(state => ({
       ...state,
@@ -47,6 +51,14 @@ class Comment extends Component {
     }))
   }
 
+  /**
+  * @description Handles the form submission of the edited comment. The
+  * function adds calls updateComment, passing it the comment's id,
+  * and new timestamp and the new 'detail' of the comment (the text
+  * of the comment itself). Afterward, it updates 'editingComment' in
+  * the comment's state to false to return the UI to the initial state
+  * @param {event} event - the form submit event
+  */
   handleSubmit = (event) => {
     event.preventDefault()
     let updatedComment = this.state.comment
@@ -62,10 +74,9 @@ class Comment extends Component {
     }))
   }
 
-  handleDelete = (event) => {
-    event.preventDefault()
-  }
-
+  /**
+  * @description Updates the state of the comment to 'editing' mode
+  */
   handleEditComment = (event) => {
     this.setState(state => ({
       ...state,
@@ -73,6 +84,10 @@ class Comment extends Component {
     }))
   }
 
+  /**
+  * @description Calls the comment action 'deleteComment' to delete
+  * the comment in question
+  */
   handleDeleteComment = (event) => {
     event.preventDefault()
 
