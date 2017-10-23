@@ -7,7 +7,6 @@ import { getNumberOfDaysFromDate } from '../../utils/utils'
 
 // Actions
 import { voteOnPost, deletePost } from '../../actions/posts'
-import { fetchCommentsForPost } from '../../actions/comments'
 
 // Components
 import Icon from '../Icon/Icon'
@@ -20,7 +19,6 @@ class Post extends Component {
 
   componentDidMount() {
     let { postObject } = this.props
-    this.props.fetchComments(postObject.id)
     let commentNumber = this.props.comments.length
 
     if (commentNumber > 0) {
@@ -127,7 +125,7 @@ class Post extends Component {
               </span>
             </div>
           </div>
-          <div className={`post-actions ${postView ? '' : 'hide'}`}>
+          <div className="post-actions">
             <Link to={`/post/${postObject.id}/edit`}>
               Edit Post
             </Link>
@@ -154,7 +152,6 @@ function mapDispatchToProps (dispatch) {
   return {
     upVotePost: (id) => dispatch(voteOnPost(id, true)),
     downVotePost: (id) => dispatch(voteOnPost(id, false)),
-    fetchComments: (id) => dispatch(fetchCommentsForPost(id)),
     deletePost: (id, history) => dispatch(deletePost(id, history))
   }
 }

@@ -1,4 +1,5 @@
 import * as API from '../utils/api'
+import { fetchCommentsForPost } from '../actions/comments'
 
 export const GET_POSTS = 'GET_POSTS';
 export const ADD_POST = 'ADD_POST';
@@ -13,15 +14,31 @@ const receivePosts = posts => ({
   posts
 });
 
-export const fetchPosts = () => dispatch => {
-  API.fetchAllPosts().then(posts => {
-      // Conduct initial sort by vote score
-      posts.sort(function(a, b) {
-        return parseFloat(b.voteScore) - parseFloat(a.voteScore);
-      });
-      dispatch(receivePosts(posts))
-    }
-  )
+export function fetchPosts() {
+  return dispatch => {
+    return API.fetchAllPosts().then(posts => {
+        // Conduct initial sort by vote score
+        posts.sort(function(a, b) {
+          return parseFloat(b.voteScore) - parseFloat(a.voteScore);
+        });
+        dispatch(receivePosts(posts))
+      }
+    )
+  }
+}
+
+// Use thunks to combine fetch posts and comments by chaining
+// async actions
+export function fetchPostsAndComments(userId) {
+  return (dispatch, getState) => {
+    return dispatch(fetchPosts()).then(() => {
+      const posts = getState().posts
+
+      posts.map(function(post) {
+        return dispatch(fetchCommentsForPost(post.id))
+      })
+    })
+  }
 }
 
 // Create Post

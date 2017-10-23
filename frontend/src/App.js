@@ -11,7 +11,7 @@ import HeadMeta from './components/HeadMeta/HeadMeta'
 
 // Actions
 import { fetchCategories } from './actions/categories'
-import { fetchPosts } from './actions/posts'
+import { fetchPostsAndComments } from './actions/posts'
 
 // Screens
 import Main from './screens/Main'
@@ -21,7 +21,7 @@ import PostView from './screens/PostView'
 class App extends Component {
   componentDidMount() {
     this.props.fetchCategories()
-    this.props.fetchPosts()
+    this.props.fetchPostsAndComments()
   }
 
   render() {
@@ -65,7 +65,7 @@ function mapStateToProps ({ categories }) {
 function mapDispatchToProps (dispatch) {
   return {
     fetchCategories: () => dispatch(fetchCategories()),
-    fetchPosts: () => dispatch(fetchPosts()),
+    fetchPostsAndComments: () => dispatch(fetchPostsAndComments()),
   }
 }
 

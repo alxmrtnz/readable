@@ -4,7 +4,6 @@ import { Helmet } from "react-helmet"
 
 // Actions
 import { voteOnPost, deletePost } from '../actions/posts'
-import { fetchCommentsForPost } from '../actions/comments'
 
 // Components
 import AddCommentForm from '../components/AddCommentForm/AddCommentForm'
@@ -17,14 +16,6 @@ class PostView extends Component {
   state = {
     postLoaded: false,
     postComments: []
-  }
-
-  componentDidMount() {
-    const postId = this.props.match.params.postId
-
-    if (postId !== undefined) {
-      this.props.fetchComments(postId)
-    }
   }
 
   /**
@@ -132,7 +123,6 @@ function mapDispatchToProps (dispatch) {
   return {
     upVotePost: (id) => dispatch(voteOnPost(id, true)),
     downVotePost: (id) => dispatch(voteOnPost(id, false)),
-    fetchComments: (id) => dispatch(fetchCommentsForPost(id)),
     deletePost: (id, history) => dispatch(deletePost(id, history))
   }
 }

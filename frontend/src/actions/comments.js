@@ -27,11 +27,14 @@ const receiveCommentsForPost = (comments) => ({
   comments
 });
 
-export const fetchCommentsForPost = (id) => dispatch => {
-  API.fetchComments(id).then(comments => {
-      dispatch(receiveCommentsForPost(comments))
-    }
-  )
+
+export function fetchCommentsForPost(id) {
+  return dispatch => {
+    return API.fetchComments(id).then(comments => {
+        dispatch(receiveCommentsForPost(comments))
+      }
+    )
+  }
 }
 
 // Comment Voting
