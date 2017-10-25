@@ -12,7 +12,7 @@ To start working with the API server, install it and start it:
 
 **Run Front End**
 
-To begin working on the front end of the application
+To begin working on the front end of the application (_make sure you're in another terminal tab or window_):
 - `cd frontend`
 - `npm install`
 - `npm start`
