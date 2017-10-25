@@ -15,7 +15,24 @@ class PostView extends Component {
 
   state = {
     postLoaded: false,
-    postComments: []
+    postComments: [],
+    isLoading: true,
+    post: {}
+  }
+
+  componentWillMount() {
+    let { posts } = this.props
+    this.getCurrentPost(posts)
+  }
+
+  onComponentDidMount() {
+    let { posts } = this.props
+    this.getCurrentPost(posts)
+  }
+
+  componentWillReceiveProps = (nextProps) => {
+    let { posts } = nextProps
+    this.getCurrentPost(posts)
   }
 
   /**
@@ -23,17 +40,26 @@ class PostView extends Component {
   * the postId provided in this.props.match.params.postId
   * @returns {Object} post - a single post object from the store
   */
-  getCurrentPost() {
-    let { posts } = this.props
+  getCurrentPost(posts) {
     const postId = this.props.match.params.postId
 
-    if (postId !== undefined) {
+    if ((postId !== undefined) && (posts.length > 0)) {
       let positionInArray = posts.map(function(item) {
         return item.id;
       }
       ).indexOf(postId);
 
-      return posts[positionInArray]
+      if (positionInArray >= 0) {
+        this.setState(state => ({
+          ...state,
+          post: posts[positionInArray],
+          isLoading: false
+        }))
+      } else {
+        console.log('the post is undefined and should redirect to a 404: ', postId)
+      }
+
+
     }
   }
 
@@ -47,21 +73,21 @@ class PostView extends Component {
   * @param {Object} history - history object prop from BrowserRouter
   * @returns {Component} Post - a post component with props being passed into it
   */
-  renderPost() {
-    let post = this.getCurrentPost()
-    let { history } = this.props
+  // renderPost() {
+  //   let post = this.getCurrentPost()
+  //   let { history } = this.props
 
-    if (post !== undefined) {
-      return (
-        <Post
-          key={post.id}
-          postObject={post}
-          history={history}
-          postView={true}
-        />
-      )
-    }
-  }
+  //   if (post !== undefined) {
+  //     return (
+  //       <Post
+  //         key={post.id}
+  //         postObject={post}
+  //         history={history}
+  //         postView={true}
+  //       />
+  //     )
+  //   }
+  // }
 
   /**
   * @description Function that accesses all comments in the redux store, then reduces
@@ -73,21 +99,20 @@ class PostView extends Component {
   * @returns {Array} reducedComments - a filtered array of comments for the current post
   */
   getCommentsForPost() {
-    let post = this.getCurrentPost()
+    let { post } = this.state
     let { comments } = this.props
 
-    if (post !== undefined) {
+    let filteredComments = comments.filter(function(comment) {
+      return comment.parentId === post.id;
+    });
 
-      let filteredComments = comments.filter(function(comment) {
-        return comment.parentId === post.id;
-      });
-
-      return filteredComments
-    }
+    return filteredComments
   }
 
   render() {
     let postComments = this.getCommentsForPost()
+    let { post } = this.state
+    let { history } = this.props
 
     return (
       <div className="post-view">
@@ -96,7 +121,15 @@ class PostView extends Component {
             <title>Udacilist | Post Title?</title>
         </Helmet>
         <div className="wrap">
-          { this.renderPost() }
+          {post &&
+            <Post
+              key={post.id}
+              postObject={post}
+              history={history}
+              postView={true}
+            />
+          }
+
           <AddCommentForm
             postId={this.props.match.params.postId}
           />
