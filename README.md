@@ -48,3 +48,7 @@ frontend
 `components` and `screens` are where most of the specific styles to the front end app are found with more global styles found in `base` and `layout`    
 
 
+## Contributions/Attributions
+`api.js` comes from/is based off of the file put together by user [jayzhou215](https://github.com/jayzhou215/readable/blob/master/src/utils/Api.js)
+
+
