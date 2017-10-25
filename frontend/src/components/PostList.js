@@ -5,10 +5,10 @@ import { connect } from 'react-redux'
 import {
   voteOnPost,
   sortPosts
-} from '../../actions/posts'
+} from '../actions/posts'
 
 // Components
-import Post from '../Post/Post'
+import Post from './Post'
 
 class PostList extends Component {
 

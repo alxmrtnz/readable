@@ -8,7 +8,7 @@ import { Helmet } from "react-helmet"
 import 'react-select/dist/react-select.css';
 
 // Components
-import Nav from '../components/Nav/Nav'
+import Nav from '../components/Nav'
 
 // Actions
 import {

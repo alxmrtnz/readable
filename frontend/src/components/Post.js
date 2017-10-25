@@ -3,13 +3,13 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // Utilities
-import { getNumberOfDaysFromDate } from '../../utils/utils'
+import { getNumberOfDaysFromDate } from '../utils/utils'
 
 // Actions
-import { voteOnPost, deletePost } from '../../actions/posts'
+import { voteOnPost, deletePost } from '../actions/posts'
 
 // Components
-import Icon from '../Icon/Icon'
+import Icon from './Icon'
 
 class Post extends Component {
 
@@ -18,7 +18,6 @@ class Post extends Component {
   }
 
   componentDidMount() {
-    let { postObject } = this.props
     let commentNumber = this.props.comments.length
 
     if (commentNumber > 0) {
@@ -54,25 +53,10 @@ class Post extends Component {
   */
   renderTitle(postObject) {
     let { postView } = this.props
-
-    if (postView) {
-      return (
-        <div
-          className="post-title"
-        >
-          {postObject.title}
-        </div>
-      )
-    } else {
-      return (
-        <Link
-          className="post-title"
-          to={`post/${postObject.id}`}
-        >
-          {postObject.title}
-        </Link>
-      )
-    }
+    return postView ?
+      (<div className="post-title" >{postObject.title}</div>)
+      :
+      (<Link className="post-title" to={`post/${postObject.id}`}>{postObject.title}</Link>)
   }
 
   render() {

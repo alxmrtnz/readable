@@ -2,15 +2,10 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
 // Utilities
-import { getNumberOfDaysFromDate } from '../../utils/utils'
+import { getNumberOfDaysFromDate } from '../utils/utils'
 
 // Actions
-import {
-  createComment,
-  voteOnComment,
-  updateComment,
-  deleteComment
-} from '../../actions/comments'
+import * as actions from '../actions/comments'
 
 class Comment extends Component {
   state = {
@@ -168,11 +163,11 @@ function mapStateToProps ({ comments }) {
 
 function mapDispatchToProps (dispatch) {
   return {
-    upVoteComment: (id) => dispatch(voteOnComment(id, true)),
-    downVoteComment: (id) => dispatch(voteOnComment(id, false)),
-    createComment: (comment) => dispatch(createComment(comment)),
-    updateComment: (commentId, timestamp, detail) => dispatch(updateComment(commentId, timestamp, detail)),
-    deleteComment: (id) => dispatch(deleteComment(id))
+    upVoteComment: (id) => dispatch(actions.voteOnComment(id, true)),
+    downVoteComment: (id) => dispatch(actions.voteOnComment(id, false)),
+    createComment: (comment) => dispatch(actions.createComment(comment)),
+    updateComment: (commentId, timestamp, detail) => dispatch(actions.updateComment(commentId, timestamp, detail)),
+    deleteComment: (id) => dispatch(actions.deleteComment(id))
   }
 }
 

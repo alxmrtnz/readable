@@ -1,10 +1,12 @@
-import * as API from '../utils/api'
+import {
+  GET_POST_COMMENTS,
+  VOTE_ON_COMMENT,
+  ADD_COMMENT,
+  UPDATE_COMMENT,
+  DELETE_COMMENT
+} from './types'
 
-export const GET_POST_COMMENTS = 'GET_POST_COMMENTS';
-export const ADD_COMMENT = 'ADD_COMMENT';
-export const VOTE_ON_COMMENT = 'VOTE_ON_COMMENT';
-export const UPDATE_COMMENT = 'UPDATE_COMMENT';
-export const DELETE_COMMENT = 'DELETE_COMMENT';
+import * as API from '../utils/api'
 
 // Comment Addition
 export function addComment(comment) {

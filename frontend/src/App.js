@@ -6,8 +6,8 @@ import { connect } from 'react-redux'
 import './assets/styles/styles.css'
 
 // Components
-import SVGSprite from './components/SVGSprite/SVGSprite'
-import HeadMeta from './components/HeadMeta/HeadMeta'
+import SVGSprite from './components/SVGSprite'
+import HeadMeta from './components/HeadMeta'
 
 // Actions
 import { fetchCategories } from './actions/categories'

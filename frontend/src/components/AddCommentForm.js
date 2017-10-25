@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { createUniqueKey } from '../../utils/utils'
+import { createUniqueKey } from '../utils/utils'
 
 // Actions
 import {
   createComment
-} from '../../actions/comments'
+} from '../actions/comments'
 
 class AddCommentForm extends Component {
   state = {

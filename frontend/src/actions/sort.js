@@ -1,4 +1,4 @@
-export const UPDATE_SORT_ORDER = 'UPDATE_SORT_ORDER';
+import { UPDATE_SORT_ORDER } from './types'
 
 export const updateSortOrder = (option) => ({
   type: UPDATE_SORT_ORDER,

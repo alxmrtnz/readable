@@ -3,11 +3,11 @@ import { connect } from 'react-redux'
 import { Link } from 'react-router-dom'
 
 // Actions
-import { sortPosts } from '../../actions/posts'
-import { updateSortOrder } from '../../actions/sort'
+import { sortPosts } from '../actions/posts'
+import { updateSortOrder } from '../actions/sort'
 
 // Components
-import Button from '../Button/Button'
+import Button from './Button'
 
 class PostFilter extends Component {
   state = {

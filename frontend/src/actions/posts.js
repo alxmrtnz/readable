@@ -1,12 +1,13 @@
-import * as API from '../utils/api'
-import { fetchCommentsForPost } from '../actions/comments'
+import {
+    GET_POSTS,
+    ADD_POST,
+    UPDATE_POST,
+    VOTE_ON_POST,
+    DELETE_POST
+} from './types'
 
-export const GET_POSTS = 'GET_POSTS';
-export const ADD_POST = 'ADD_POST';
-export const UPDATE_POST = 'UPDATE_POST';
-export const VOTE_ON_POST = 'VOTE_ON_POST';
-export const SORT_POSTS = 'SORT_POSTS';
-export const DELETE_POST = 'DELETE_POST';
+import * as API from '../utils/api'
+import { fetchCommentsForPost } from './comments'
 
 // Post Fetching
 const receivePosts = posts => ({

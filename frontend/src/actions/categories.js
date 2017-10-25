@@ -1,6 +1,6 @@
-import * as API from '../utils/api'
+import { GET_ALL_CATEGORIES } from './types'
 
-export const GET_ALL_CATEGORIES = 'GET_ALL_CATEGORIES'
+import * as API from '../utils/api'
 
 const receiveAllCategories = categories => ({
   type: GET_ALL_CATEGORIES,

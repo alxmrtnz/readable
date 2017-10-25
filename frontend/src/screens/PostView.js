@@ -6,10 +6,10 @@ import { Helmet } from "react-helmet"
 import { voteOnPost, deletePost } from '../actions/posts'
 
 // Components
-import AddCommentForm from '../components/AddCommentForm/AddCommentForm'
-import Comment from '../components/Comment/Comment'
-import Nav from '../components/Nav/Nav'
-import Post from '../components/Post/Post'
+import AddCommentForm from '../components/AddCommentForm'
+import Comment from '../components/Comment'
+import Nav from '../components/Nav'
+import Post from '../components/Post'
 
 class PostView extends Component {
 
