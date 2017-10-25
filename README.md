@@ -45,4 +45,6 @@ frontend
 ```
 `styles.scss` is the sole file that is compiled using the scripts (and the `node-sass-chokidar` package) found in `package.json`. To add new styles, make sure to import them into `styles.scss`
 
+`components` and `screens` are where most of the specific styles to the front end app are found with more global styles found in `base` and `layout`    
+
 
