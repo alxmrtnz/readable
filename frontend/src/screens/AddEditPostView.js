@@ -143,10 +143,33 @@ class AddEditPostView extends Component {
     let newErrorState = errors
     let anyErrors = false
 
-    post.title === "" ? (newErrorState.title = true, anyErrors = true) : newErrorState.title = false
-    post.body === "" ? (newErrorState.body = true, anyErrors = true) : newErrorState.body = false
-    post.author === "" ? (newErrorState.author = true, anyErrors = true) : newErrorState.author = false
-    post.category === "" ? (newErrorState.category = true, anyErrors = true) : newErrorState.category = false
+    if (post.title === "") {
+      newErrorState.title = true
+      anyErrors = true
+    } else {
+      newErrorState.title = false
+    }
+
+    if (post.body === "") {
+      newErrorState.body = true
+      anyErrors = true
+    } else {
+      newErrorState.body = false
+    }
+
+    if (post.author === "") {
+      newErrorState.author = true
+      anyErrors = true
+    } else {
+      newErrorState.author = false
+    }
+
+    if (post.category === "") {
+      newErrorState.category = true
+      anyErrors = true
+    } else {
+      newErrorState.category = false
+    }
 
     if (anyErrors) {
       this.setState(state => ({
