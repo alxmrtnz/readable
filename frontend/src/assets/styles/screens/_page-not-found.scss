@@ -1,0 +1,16 @@
+.page-not-found {
+  &-content {
+    text-align: center;
+    margin-top: 6rem;
+
+    &-heading {
+
+    }
+    &-message {
+      a {
+        color: $brand;
+        text-decoration: underline;
+      }
+    }
+  }
+}

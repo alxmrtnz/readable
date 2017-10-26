@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Helmet } from "react-helmet"
+import { Redirect } from 'react-router-dom'
 
 // Actions
 import { voteOnPost, deletePost } from '../actions/posts'
@@ -17,7 +18,8 @@ class PostView extends Component {
     postLoaded: false,
     postComments: [],
     isLoading: true,
-    post: {}
+    post: {},
+    redirect: false
   }
 
   componentWillMount() {
@@ -56,10 +58,11 @@ class PostView extends Component {
           isLoading: false
         }))
       } else {
-        console.log('the post is undefined and should redirect to a 404: ', postId)
+        this.setState(state => ({
+          ...state,
+          redirect: true
+        }))
       }
-
-
     }
   }
 
@@ -111,7 +114,7 @@ class PostView extends Component {
 
   render() {
     let postComments = this.getCommentsForPost()
-    let { post } = this.state
+    let { post, redirect } = this.state
     let { history } = this.props
 
     return (
@@ -120,16 +123,17 @@ class PostView extends Component {
         <Helmet>
             <title>Udacilist | Post Title?</title>
         </Helmet>
-        <div className="wrap">
-          {post &&
+        {redirect &&
+          <Redirect to="/404" push />
+        }
+        {post &&
+          <div className="wrap">
             <Post
               key={post.id}
               postObject={post}
               history={history}
               postView={true}
             />
-          }
-
           <AddCommentForm
             postId={this.props.match.params.postId}
           />
@@ -139,6 +143,7 @@ class PostView extends Component {
             ))}
           </div>
         </div>
+        }
       </div>
     )
   }

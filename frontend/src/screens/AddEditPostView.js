@@ -3,6 +3,7 @@ import Select from 'react-select';
 import { connect } from 'react-redux'
 import { createUniqueKey } from '../utils/utils'
 import { Helmet } from "react-helmet"
+import { Redirect } from 'react-router-dom'
 
 // React Select Default Styles
 import 'react-select/dist/react-select.css';
@@ -29,7 +30,8 @@ class AddEditPostView extends Component {
       voteScore: "0",
       deleted: false
     },
-    updatingPost: false
+    updatingPost: false,
+    redirect: false
   }
 
   componentDidMount() {
@@ -52,17 +54,36 @@ class AddEditPostView extends Component {
   setExisitingPost = (posts) => {
     const postId = this.props.match.params.postId
 
-    if (postId !== undefined) {
+    // if (postId !== undefined) {
+    //   let positionInArray = posts.map(function(item) {
+    //     return item.id;
+    //   }
+    //   ).indexOf(postId);
+
+    //   if (posts[positionInArray] !== undefined) {
+    //     this.setState(state => ({
+    //       ...state,
+    //       post: posts[positionInArray],
+    //       updatingPost: true
+    //     }))
+    //   }
+    // }
+    if ((postId !== undefined) && (posts.length > 0)) {
       let positionInArray = posts.map(function(item) {
         return item.id;
       }
       ).indexOf(postId);
 
-      if (posts[positionInArray] !== undefined) {
+      if (positionInArray >= 0) {
         this.setState(state => ({
           ...state,
           post: posts[positionInArray],
-          updatingPost: true
+          isLoading: false
+        }))
+      } else {
+        this.setState(state => ({
+          ...state,
+          redirect: true
         }))
       }
     }
@@ -138,7 +159,7 @@ class AddEditPostView extends Component {
 
   render() {
     const { categories } = this.props
-    let { post, updatingPost } = this.state
+    let { post, updatingPost, redirect } = this.state
     let selectOptions = this.convertCategoriesObjectToArray(categories)
 
     return (
@@ -147,47 +168,52 @@ class AddEditPostView extends Component {
         <Helmet>
             <title>Udacilist | Add Post</title>
         </Helmet>
-        <div className="wrap">
-          <form onSubmit={(event) => this.handleSubmit(event)} className='create-post-form'>
-            <div className='create-post-details'>
-              <input
-                name="title"
-                type="text"
-                placeholder="Title"
-                value={post.title}
-                onChange={event => this.handleInputChange({title: event.target.value})}
-              />
-              <input
-                name="author"
-                type="text"
-                placeholder="Author"
-                value={post.author}
-                onChange={event => this.handleInputChange({author: event.target.value})}
-              />
-              <textarea
-                name="body"
-                type="text"
-                placeholder="Body"
-                value={post.body}
-                onChange={event => this.handleInputChange({body: event.target.value})}
-              />
-              <Select
-                name="form-field-name"
-                value={post.category}
-                placeholder="Select a category..."
-                resetValue=""
-                options={selectOptions}
-                onChange={event => this.handleInputChange({category: event.value})}
-              />
-              <button
-                className="cta"
-                onClick={(event) => this.handleSubmit(event)}
-              >
-                {updatingPost ? 'Save Changes' : 'Add Post'}
-              </button>
-            </div>
-          </form>
-        </div>
+        {redirect &&
+          <Redirect to="/404" push />
+        }
+        { post &&
+          <div className="wrap">
+            <form onSubmit={(event) => this.handleSubmit(event)} className='create-post-form'>
+              <div className='create-post-details'>
+                <input
+                  name="title"
+                  type="text"
+                  placeholder="Title"
+                  value={post.title}
+                  onChange={event => this.handleInputChange({title: event.target.value})}
+                />
+                <input
+                  name="author"
+                  type="text"
+                  placeholder="Author"
+                  value={post.author}
+                  onChange={event => this.handleInputChange({author: event.target.value})}
+                />
+                <textarea
+                  name="body"
+                  type="text"
+                  placeholder="Body"
+                  value={post.body}
+                  onChange={event => this.handleInputChange({body: event.target.value})}
+                />
+                <Select
+                  name="form-field-name"
+                  value={post.category}
+                  placeholder="Select a category..."
+                  resetValue=""
+                  options={selectOptions}
+                  onChange={event => this.handleInputChange({category: event.value})}
+                />
+                <button
+                  className="cta"
+                  onClick={(event) => this.handleSubmit(event)}
+                >
+                  {updatingPost ? 'Save Changes' : 'Add Post'}
+                </button>
+              </div>
+            </form>
+          </div>
+        }
       </div>
     )
   }

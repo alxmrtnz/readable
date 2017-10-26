@@ -17,6 +17,7 @@ import { fetchPostsAndComments } from './actions/posts'
 import Main from './screens/Main'
 import AddEditPostView from './screens/AddEditPostView'
 import PostView from './screens/PostView'
+import PageNotFound from './screens/PageNotFound'
 
 class App extends Component {
   componentDidMount() {
@@ -31,6 +32,9 @@ class App extends Component {
         <SVGSprite />
         <BrowserRouter>
           <Switch>
+            <Route path="/404" render={() => (
+              <PageNotFound />
+            )} />
             <Route exact path="/" render={(props) => (
               <Main {...props}/>
             )}/>
@@ -45,9 +49,6 @@ class App extends Component {
             )} />
             <Route exact path="/post/:postId/edit" render={(props) => (
               <AddEditPostView {...props} />
-            )} />
-            <Route path="/create-edit" render={() => (
-              <div>create/edit view</div>
             )} />
           </Switch>
         </BrowserRouter>
