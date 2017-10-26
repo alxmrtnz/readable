@@ -30,6 +30,13 @@ class AddEditPostView extends Component {
       voteScore: "0",
       deleted: false
     },
+    errors: {
+      title: false,
+      body: false,
+      author: false,
+      category: false
+    },
+    formHasErrors: false,
     updatingPost: false,
     redirect: false
   }
@@ -54,20 +61,6 @@ class AddEditPostView extends Component {
   setExisitingPost = (posts) => {
     const postId = this.props.match.params.postId
 
-    // if (postId !== undefined) {
-    //   let positionInArray = posts.map(function(item) {
-    //     return item.id;
-    //   }
-    //   ).indexOf(postId);
-
-    //   if (posts[positionInArray] !== undefined) {
-    //     this.setState(state => ({
-    //       ...state,
-    //       post: posts[positionInArray],
-    //       updatingPost: true
-    //     }))
-    //   }
-    // }
     if ((postId !== undefined) && (posts.length > 0)) {
       let positionInArray = posts.map(function(item) {
         return item.id;
@@ -78,7 +71,7 @@ class AddEditPostView extends Component {
         this.setState(state => ({
           ...state,
           post: posts[positionInArray],
-          isLoading: false
+          updatingPost: true
         }))
       } else {
         this.setState(state => ({
@@ -125,14 +118,46 @@ class AddEditPostView extends Component {
   * in order to manage the edit form
   * @param {Object} newPartialInput - event.target.value of an input
   */
-  handleInputChange(newPartialInput) {
+  handleInputChange(newPartialInput, fieldErrorState) {
     this.setState(state => ({
       ...state,
       post: {
         ...state.post,
         ...newPartialInput,
-      }
+      },
+      errors: {
+        ...state.errors,
+        ...fieldErrorState
+      },
+      formHasErrors: false
     }))
+  }
+
+  /**
+  * @description Function that checks inputs to make sure they have a value
+  * @returns {Bool} readyToSubmit - bool to tell onSubmit whether
+  * the form is good to submit without errors
+  */
+  runFormValidation = () => {
+    let { post, errors } = this.state
+    let newErrorState = errors
+    let anyErrors = false
+
+    post.title === "" ? (newErrorState.title = true, anyErrors = true) : newErrorState.title = false
+    post.body === "" ? (newErrorState.body = true, anyErrors = true) : newErrorState.body = false
+    post.author === "" ? (newErrorState.author = true, anyErrors = true) : newErrorState.author = false
+    post.category === "" ? (newErrorState.category = true, anyErrors = true) : newErrorState.category = false
+
+    if (anyErrors) {
+      this.setState(state => ({
+        ...state,
+        errors: newErrorState,
+        formHasErrors: true
+      }))
+    } else {
+      let readyToSubmit = true;
+      return readyToSubmit;
+    }
   }
 
   /**
@@ -145,21 +170,25 @@ class AddEditPostView extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
 
-    let postToSubmit = this.state.post
+    let readyToSubmit = this.runFormValidation()
 
-    if (this.state.updatingPost) {
-      this.props.updatePost(postToSubmit)
-    } else {
-      postToSubmit.id = createUniqueKey()
-      postToSubmit.timestamp = Date.now()
-      this.props.createPost(postToSubmit)
+    if(readyToSubmit) {
+      let postToSubmit = this.state.post
+
+      if (this.state.updatingPost) {
+        this.props.updatePost(postToSubmit)
+      } else {
+        postToSubmit.id = createUniqueKey()
+        postToSubmit.timestamp = Date.now()
+        this.props.createPost(postToSubmit)
+      }
+      this.props.history.goBack()
     }
-    this.props.history.goBack()
   }
 
   render() {
     const { categories } = this.props
-    let { post, updatingPost, redirect } = this.state
+    let { post, updatingPost, redirect, errors, formHasErrors } = this.state
     let selectOptions = this.convertCategoriesObjectToArray(categories)
 
     return (
@@ -176,34 +205,41 @@ class AddEditPostView extends Component {
             <form onSubmit={(event) => this.handleSubmit(event)} className='create-post-form'>
               <div className='create-post-details'>
                 <input
+                  className={`${errors.title ? 'error' : ''}`}
                   name="title"
                   type="text"
                   placeholder="Title"
                   value={post.title}
-                  onChange={event => this.handleInputChange({title: event.target.value})}
+                  onChange={event => this.handleInputChange({title: event.target.value}, {title: false})}
                 />
                 <input
+                  className={`${errors.author ? 'error' : ''}`}
                   name="author"
                   type="text"
                   placeholder="Author"
                   value={post.author}
-                  onChange={event => this.handleInputChange({author: event.target.value})}
+                  onChange={event => this.handleInputChange({author: event.target.value}, {author: false})}
                 />
                 <textarea
+                  className={`${errors.body ? 'error' : ''}`}
                   name="body"
                   type="text"
                   placeholder="Body"
                   value={post.body}
-                  onChange={event => this.handleInputChange({body: event.target.value})}
+                  onChange={event => this.handleInputChange({body: event.target.value}, {body: false})}
                 />
                 <Select
+                  className={`${errors.category ? 'error' : ''}`}
                   name="form-field-name"
                   value={post.category}
                   placeholder="Select a category..."
                   resetValue=""
                   options={selectOptions}
-                  onChange={event => this.handleInputChange({category: event.value})}
+                  onChange={event => this.handleInputChange({category: event.value}, {category: false})}
                 />
+                <div className={`error-message${formHasErrors ? ' visible' : ''}`}>
+                  Please correct the marked fields above before you submit your post!
+                </div>
                 <button
                   className="cta"
                   onClick={(event) => this.handleSubmit(event)}

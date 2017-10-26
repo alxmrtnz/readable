@@ -8,7 +8,6 @@ import Nav from '../components/Nav'
 class PageNotFound extends Component {
 
   render() {
-    // const { handleClick, optionalClassNames, label } = this.props;
 
     return (
       <div className="page-not-found">

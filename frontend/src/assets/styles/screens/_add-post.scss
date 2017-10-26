@@ -2,4 +2,32 @@
   nav {
     margin-bottom: $double-space;
   }
+
+  .Select {
+    margin-bottom: $space;
+  }
+
+  .create-post-form {
+    .error {
+      border-color: red;
+
+      .Select-control {
+        border-color: red;
+      }
+    }
+  }
+
+  .error-message {
+    @include full-box();
+    display: none;
+    padding: 1em;
+    background: red;
+    color: $background;
+    border-radius: 0.2em;
+    margin-bottom: $space;
+
+    &.visible {
+      display: block;
+    }
+  }
 }
